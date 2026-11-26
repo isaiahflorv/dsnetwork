@@ -8,7 +8,13 @@
   "banner": "Dropping Friday!",
   "bannerOn": true,
   "featured": "113090773455157",
-  "team": [],
+  "team": [
+    {
+      "name": "311_DRAGON",
+      "role": "Lead Producer",
+      "userId": "2054312947"
+    }
+  ],
   "games": [
     {
       "placeId": "113090773455157",
