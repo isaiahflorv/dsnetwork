@@ -42,15 +42,18 @@ main,nav,footer{position:relative;z-index:1}
 /* nav */
 nav{position:sticky;top:0;z-index:10;background:rgba(9,9,10,.72);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
 nav .wrap{display:flex;align-items:center;gap:18px;padding-block:12px}
-.brand{display:flex;align-items:center;gap:10px;font:900 19px Archivo;text-transform:uppercase;letter-spacing:-.01em}
+.brand{white-space:nowrap;display:flex;align-items:center;gap:10px;font:900 19px Archivo;text-transform:uppercase;letter-spacing:-.01em}
 .logo-img{filter:grayscale(1) brightness(1.3) contrast(1.15) drop-shadow(0 0 12px rgba(255,255,255,.25))}
 .brand img{width:42px;height:42px;object-fit:contain}
 .links{display:flex;gap:4px;margin-left:auto}
 .links a{padding:10px 12px;border-radius:10px;color:var(--mute);font:600 14px Inter;transition:color .2s}
 .links a:hover{color:var(--gold2)}
+.links .devlink{display:none;color:var(--ink);border:1px solid var(--line2);background:rgba(255,255,255,.04)}
+.isadmin .links .devlink{display:inline-flex;align-items:center}
+.links .devlink::before{content:"";width:7px;height:7px;border-radius:50%;background:#46e08a;box-shadow:0 0 8px #46e08a;margin-right:8px}
 
 /* buttons */
-.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 26px;border:0;border-radius:4px;cursor:pointer;font:800 14px Archivo;letter-spacing:.14em;text-transform:uppercase;color:#0d0f12;background:var(--shine);background-size:250% 100%;box-shadow:0 0 0 1px rgba(255,255,255,.4) inset,0 10px 30px rgba(205,214,228,.25);transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .2s,background-position .8s;-webkit-tap-highlight-color:transparent}
+.btn{white-space:nowrap;position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:10px;min-height:48px;padding:0 26px;border:0;border-radius:4px;cursor:pointer;font:800 14px Archivo;letter-spacing:.14em;text-transform:uppercase;color:#0d0f12;background:var(--shine);background-size:250% 100%;box-shadow:0 0 0 1px rgba(255,255,255,.4) inset,0 10px 30px rgba(205,214,228,.25);transition:transform .18s cubic-bezier(.3,1.6,.5,1),box-shadow .2s,background-position .8s;-webkit-tap-highlight-color:transparent}
 .btn:hover{transform:translateY(-2px);background-position:-60% 0;box-shadow:0 0 0 1px rgba(255,255,255,.6) inset,0 14px 40px rgba(205,214,228,.45)}
 .btn:active{transform:translateY(2px) scale(.98)}
 .btn::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-20deg);transition:left .6s}
@@ -168,7 +171,7 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .adm .shade{opacity:1;pointer-events:auto}.adm .drawer{transform:none}
 .drawer header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .drawer h2{font:900 24px Archivo;text-transform:uppercase}
-.drawer form{display:grid;gap:10px}
+.drawer form{display:grid;gap:12px}
 label{display:grid;gap:6px;font-size:13px;color:var(--mute)}
 input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;border:1px solid var(--line);border-radius:4px;padding:12px}
 .msg{font-size:13px;min-height:18px;color:var(--gold2)}
@@ -180,14 +183,35 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
 .item button{min-height:36px;padding:0 10px;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer;font-size:13px}
 .hint{font-size:12px;color:var(--mute);line-height:1.5}
 .hide{display:none!important}
+.banner{position:relative;z-index:11;padding:10px 16px;text-align:center;font:800 13px Archivo;letter-spacing:.12em;text-transform:uppercase;color:#0d0f12;background:var(--shine);background-size:250% 100%;animation:shine 8s linear infinite}
+.team{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px;margin-top:44px}
+.member{border:1px solid var(--line);background:var(--bg2);padding:24px 20px;text-align:center;transition:transform .3s,border-color .3s}
+.member:hover{transform:translateY(-4px);border-color:var(--line2)}
+.av{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font:900 24px Archivo;color:#0d0f12;background:var(--shine);background-size:250% 100%;animation:shine 6s linear infinite;box-shadow:0 0 24px rgba(205,214,228,.25)}
+.member h3{font-size:17px;letter-spacing:0;text-transform:none}
+.member p{color:var(--mute);font-size:13px;margin-top:4px;text-transform:uppercase;letter-spacing:.14em;font-weight:600}
+.flink{color:var(--gold2);text-decoration:underline;margin-left:6px}
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:18px;border:1px solid var(--line);padding:4px}
+.tab{min-height:40px;border:0;background:none;color:var(--mute);font:800 11px Archivo;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.tab.on{background:var(--shine);background-size:250% 100%;color:#0d0f12}
+.mini{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px}
+.mini div{border:1px solid var(--line);padding:10px;font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
+.mini b{display:block;font:900 20px Archivo;color:var(--ink);letter-spacing:0}
+textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;border:1px solid var(--line);border-radius:4px;padding:12px;resize:vertical}
+.check{display:flex;align-items:center;gap:10px;color:var(--ink);font-size:14px;min-height:40px}
+.check input{width:20px;height:20px;accent-color:#d7dce2}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.item .acts{display:flex;gap:4px;flex:none}
+.item .acts button{min-width:36px;padding:0 8px}
+.item .acts button.star{color:#fff;background:rgba(255,255,255,.12)}
 .ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.55);transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
 @keyframes rip{to{transform:scale(4);opacity:0}}
 
 .reveal{opacity:0;transform:translateY(30px);transition:opacity .8s ease,transform .8s cubic-bezier(.2,.8,.2,1)}
 .reveal.in{opacity:1;transform:none}
 
-@media(max-width:820px){.feat{grid-template-columns:1fr}.feat .thumb{aspect-ratio:16/9}.ptop{grid-template-columns:1fr}.links a:not(.btn){display:none}}
-@media(max-width:560px){.gcard{width:76vw}.fstats b{font-size:22px}}
+@media(max-width:820px){.feat{grid-template-columns:1fr}.feat .thumb{aspect-ratio:16/9}.ptop{grid-template-columns:1fr}.links a:not(.btn):not(.devlink){display:none}.links .devlink{font-size:12px;padding:8px 10px}}
+@media(max-width:560px){.gcard{width:76vw}.dl-long{display:none}nav .btn.sm{padding:0 12px;letter-spacing:.08em}nav .wrap{gap:10px}.fstats b{font-size:22px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}.gtrack.run{width:auto;overflow-x:auto}}
 </style>
 </head>
@@ -198,14 +222,16 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
 <div class="glow" id="glow" aria-hidden="true"></div>
 <div class="grain" aria-hidden="true"></div>
 
+<div class="banner hide" id="banner"><span id="bannerText"></span></div>
 <nav>
   <div class="wrap">
-    <a class="brand" href="#top"><img class="logo-img" src="" alt="">D$ Devs</a>
+    <a class="brand" href="#top"><img class="logo-img" src="" alt=""><span class="sitename">D$ Devs</span></a>
     <div class="links">
       <a href="#games">Games</a>
       <a href="#services">Services</a>
       <a href="#process">Process</a>
       <a href="#faq">FAQ</a>
+      <a href="#admin" class="devlink" id="devLink"><span class="dl-long">Developer&nbsp;</span>Panel</a>
     </div>
     <a class="btn sm" href="#join" style="margin-left:auto">Work with us</a>
   </div>
@@ -216,7 +242,7 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
     <div class="hero-logo"><img class="logo-img" src="" alt="D$ Devs logo"></div>
     <div class="label" style="justify-content:center">Roblox development group</div>
     <h1>We build games<br>people <span class="gold">play.</span></h1>
-    <p class="lead">D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.</p>
+    <p class="lead" id="tagline">D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.</p>
     <div class="founder">Founded by: <b id="founder">@djbmx123</b></div>
     <div class="cta">
       <a class="btn" href="#games">See our games</a>
@@ -256,10 +282,18 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
     </div>
   </section>
 
+  <section class="band hide" id="team">
+    <div class="wrap">
+      <div class="label reveal">The team</div>
+      <h2 class="mid reveal">The people <span class="gold">behind it.</span></h2>
+      <div class="team" id="teamList"></div>
+    </div>
+  </section>
+
   <section class="band" id="join">
     <div class="wrap">
       <div class="reveal" style="text-align:center;margin-bottom:44px">
-        <h2 class="big">Join <span class="gold">D$ Devs.</span></h2>
+        <h2 class="big">Join <span class="gold"><span class="sitename">D$ Devs</span>.</span></h2>
         <p class="lead" style="margin-inline:auto">We're always looking for developers who love making Roblox games.</p>
       </div>
       <div class="panel reveal">
@@ -267,7 +301,7 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
         <div class="pmid gold">This is for developers who are serious.</div>
         <div class="pbot">
           <div><div class="label" style="margin-bottom:8px">Applications</div><h3 id="applyState">Open now.</h3></div>
-          <a class="btn" id="applyBtn" href="#join">Apply now →</a>
+          <div class="cta" style="margin:0"><a class="btn ghost hide" id="discordBtn" target="_blank" rel="noopener">Join our Discord</a><a class="btn" id="applyBtn" href="#join">Apply now →</a></div>
         </div>
       </div>
     </div>
@@ -284,15 +318,15 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
 
 <footer>
   <div class="wrap">
-    <a class="brand" href="#top"><img class="logo-img" src="" alt="">D$ Devs</a>
-    <span>© <span id="yr"></span> D$ Devs · Not affiliated with Roblox Corporation.</span>
+    <a class="brand" href="#top"><img class="logo-img" src="" alt=""><span class="sitename">D$ Devs</span></a>
+    <span>© <span id="yr"></span> <span class="sitename">D$ Devs</span> · Not affiliated with Roblox Corporation. <a class="hide flink" id="discordFoot" target="_blank" rel="noopener">Discord</a></span>
     <button class="lock" id="openAdmin">🔒 Admin</button>
   </div>
 </footer>
 
 <div class="shade" id="shade"></div>
 <aside class="drawer" id="drawer" aria-label="Admin">
-  <header><h2>Admin</h2><button class="btn ghost sm" id="closeAdmin">Close</button></header>
+  <header><h2>Developer Panel</h2><button class="btn ghost sm" id="closeAdmin">Close</button></header>
   <form id="login">
     <p class="hint">Log in once on each device you want admin on (your iPhone, your computer). Nobody else can see or use this.</p>
     <label>GitHub repo (username/repo)<input id="lRepo" placeholder="isaiahflorv/dsnetwork" required autocomplete="off"></label>
@@ -301,20 +335,55 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
     <p class="msg" id="lMsg" role="status"></p>
   </form>
   <div id="panel" class="hide">
-    <form id="add">
-      <label>Roblox game link<input id="aUrl" type="url" placeholder="https://www.roblox.com/games/123456/..." required></label>
-      <button class="btn" id="addBtn" type="submit">Add game</button>
-      <p class="msg" id="aMsg" role="status"></p>
-    </form>
-    <p class="hint">The name, thumbnail, visits and players fill in from Roblox by themselves and update every minute.</p>
-    <form id="formLink" style="margin-top:22px">
-      <label>Application form link<input id="fForm" type="url" placeholder="https://forms.gle/..."></label>
-      <label>Founded by<input id="fFounder" placeholder="@djbmx123" maxlength="40"></label>
-      <button class="btn" id="formBtn" type="submit">Save settings</button>
-      <p class="msg" id="fMsg" role="status"></p>
-    </form>
-    <div class="list" id="list"></div>
-    <button class="btn ghost" id="logout" style="margin-top:20px;width:100%">Log out of this device</button>
+    <div class="tabs" role="tablist">
+      <button class="tab on" data-tab="tGames">Games</button><button class="tab" data-tab="tSite">Site</button><button class="tab" data-tab="tNews">Announce</button><button class="tab" data-tab="tTeam">Team</button>
+    </div>
+
+    <div class="tpane" id="tGames">
+      <div class="mini"><div><b id="mGames">0</b>games</div><div><b id="mVisits">0</b>visits</div><div><b id="mPlaying">0</b>playing</div></div>
+      <form id="add">
+        <label>Roblox game link<input id="aUrl" type="url" placeholder="https://www.roblox.com/games/123456/..." required></label>
+        <button class="btn" id="addBtn" type="submit">Add game</button>
+        <p class="msg" id="aMsg" role="status"></p>
+      </form>
+      <p class="hint">↑ ↓ change the order on the site. ★ makes a game the big featured one. Stats update every minute by themselves.</p>
+      <div class="list" id="list"></div>
+      <button class="btn ghost sm" id="refreshBtn" type="button" style="width:100%;margin-top:12px">Refresh stats now</button>
+    </div>
+
+    <div class="tpane hide" id="tSite">
+      <form id="siteForm">
+        <label>Group name<input id="sName" maxlength="30" placeholder="D$ Devs"></label>
+        <label>Tagline (under the big headline)<textarea id="sTag" maxlength="220" rows="3"></textarea></label>
+        <label>Founded by<input id="sFounder" maxlength="40" placeholder="@djbmx123"></label>
+        <label>Application form link<input id="sForm" type="url" placeholder="https://forms.gle/..."></label>
+        <label class="check"><input type="checkbox" id="sOpen"> Applications are open</label>
+        <label>Discord invite link<input id="sDiscord" type="url" placeholder="https://discord.gg/..."></label>
+        <button class="btn" id="siteBtn" type="submit">Save site settings</button>
+        <p class="msg" id="sMsg" role="status"></p>
+      </form>
+    </div>
+
+    <div class="tpane hide" id="tNews">
+      <form id="newsForm">
+        <label>Announcement (shows in a bar at the very top of the site)<textarea id="nText" maxlength="160" rows="3" placeholder="New game dropping Friday!"></textarea></label>
+        <label class="check"><input type="checkbox" id="nOn"> Show the announcement</label>
+        <button class="btn" id="newsBtn" type="submit">Save announcement</button>
+        <p class="msg" id="nMsg" role="status"></p>
+      </form>
+    </div>
+
+    <div class="tpane hide" id="tTeam">
+      <form id="teamForm">
+        <div class="two"><label>Name<input id="tName" maxlength="30" placeholder="@username" required></label><label>Role<input id="tRole" maxlength="30" placeholder="Scripter" required></label></div>
+        <button class="btn" id="teamBtn" type="submit">Add team member</button>
+        <p class="msg" id="tMsg" role="status"></p>
+      </form>
+      <p class="hint">The Team section only shows on the site once you add someone.</p>
+      <div class="list" id="teamAdmin"></div>
+    </div>
+
+    <button class="btn ghost" id="logout" style="margin-top:24px;width:100%">Log out of this device</button>
   </div>
 </aside>
 
@@ -342,8 +411,22 @@ const faq=[["Do I need experience?","Yes. You should have worked on at least one
 $("faqList").innerHTML=faq.map(f=>`<details class="reveal"><summary>${f[0]}</summary><p>${f[1]}</p></details>`).join("");
 
 // ---------- settings ----------
-let formUrl="",founder="@djbmx123";
-const setApply=()=>{const ok=/^https:\/\//i.test(formUrl),b=$("applyBtn");b.href=ok?formUrl:"#join";b.textContent=ok?"Apply now →":"Opening soon";ok?b.setAttribute("target","_blank"):b.removeAttribute("target");b.rel="noopener";$("applyState").textContent=ok?"Open now.":"Opening soon.";$("founder").textContent=founder};
+const DEF={formUrl:"",founder:"@djbmx123",name:"D$ Devs",tagline:"D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.",discord:"",appsOpen:true,banner:"",bannerOn:false,featured:"",team:[]};
+let site={...DEF};
+const str=(v,d)=>typeof v==="string"&&v.trim()?v.trim():d;
+const readSite=d=>{d=d&&!Array.isArray(d)?d:{};return{formUrl:str(d.formUrl,""),founder:str(d.founder,DEF.founder),name:str(d.name,DEF.name),tagline:str(d.tagline,DEF.tagline),discord:str(d.discord,""),appsOpen:d.appsOpen!==false,banner:str(d.banner,""),bannerOn:!!d.bannerOn,featured:String(d.featured||""),team:Array.isArray(d.team)?d.team.filter(m=>m&&typeof m.name==="string").slice(0,60):[]}};
+function applySite(){
+  document.querySelectorAll(".sitename").forEach(e=>e.textContent=site.name);
+  $("tagline").textContent=site.tagline;$("founder").textContent=site.founder;
+  const ok=site.appsOpen&&/^https:\/\//i.test(site.formUrl),b=$("applyBtn");
+  b.href=ok?site.formUrl:"#join";b.textContent=ok?"Apply now →":site.appsOpen?"Opening soon":"Closed";ok?b.setAttribute("target","_blank"):b.removeAttribute("target");b.rel="noopener";
+  $("applyState").textContent=!site.appsOpen?"Closed for now.":ok?"Open now.":"Opening soon.";
+  const dc=/^https:\/\/(discord\.gg|discord\.com|www\.discord\.com)\//i.test(site.discord);
+  for(const id of ["discordBtn","discordFoot"]){$(id).classList.toggle("hide",!dc);if(dc)$(id).href=site.discord}
+  $("banner").classList.toggle("hide",!(site.bannerOn&&site.banner));$("bannerText").textContent=site.banner;
+  $("team").classList.toggle("hide",!site.team.length);
+  $("teamList").innerHTML=site.team.map(m=>`<div class="member reveal in"><div class="av">${esc((m.name.replace(/^@/,"")[0]||"?").toUpperCase())}</div><h3>${esc(m.name)}</h3><p>${esc(m.role||"")}</p></div>`).join("");
+}
 
 // ---------- Roblox ----------
 const rbx=(sub,path)=>fetch(`https://${sub}.${PROXY}${path}`).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
@@ -370,7 +453,7 @@ function render(){
   const cards=list.map(card).join("");
   area.innerHTML=`<div class="gstrip"><div class="gtrack ${run?"run":"static"}" style="--dur:${list.length*7}s">${run?cards+cards:cards}</div></div>`;
   // featured = most visits
-  const top=[...list].sort((a,b)=>(info[b.universeId]?.visits||0)-(info[a.universeId]?.visits||0))[0],i=info[top.universeId]||{};
+  const top=list.find(g=>g.placeId===site.featured)||[...list].sort((a,b)=>(info[b.universeId]?.visits||0)-(info[a.universeId]?.visits||0))[0],i=info[top.universeId]||{};
   $("featWrap").innerHTML=`<div class="feat reveal in" data-u="${esc(top.universeId)}">
     <div class="thumb">${i.thumb?`<img src="${esc(i.thumb)}" alt="">`:""}</div>
     <div class="finfo"><div class="label" style="margin:0">Featured game</div>
@@ -402,8 +485,7 @@ async function start(){
   try{const r=await fetch("games.json?"+Date.now(),{cache:"no-store"});data=r.ok?await r.json():null}catch{}
   list=Array.isArray(data)?data:Array.isArray(data?.games)?data.games:[];
   list=list.filter(g=>/^\d+$/.test(g.placeId)&&/^\d+$/.test(String(g.universeId)));
-  formUrl=typeof data?.formUrl==="string"?data.formUrl:"";
-  founder=typeof data?.founder==="string"&&data.founder.trim()?data.founder:"@djbmx123";setApply();
+  site=readSite(data);applySite();
   render();await loadInfo(list.map(g=>g.universeId));render();
   setInterval(async()=>{await loadInfo(list.map(g=>g.universeId));updateNumbers()},REFRESH_MS);
 }
@@ -419,24 +501,34 @@ document.addEventListener("pointerdown",e=>{const b=e.target.closest(".btn");if(
 // ---------- admin ----------
 let repo=store.get("dd_repo"),token=store.get("dd_token");
 const loggedIn=()=>!!(repo&&token);
-const showPanel=()=>{const on=loggedIn();$("fForm").value=formUrl;$("fFounder").value=founder;document.body.classList.toggle("isadmin",on);$("login").classList.toggle("hide",on);$("panel").classList.toggle("hide",!on);renderAdminList()};
+const fillForms=()=>{$("sName").value=site.name;$("sTag").value=site.tagline;$("sFounder").value=site.founder;$("sForm").value=site.formUrl;$("sOpen").checked=site.appsOpen;$("sDiscord").value=site.discord;$("nText").value=site.banner;$("nOn").checked=site.bannerOn};
+const showPanel=()=>{const on=loggedIn();document.body.classList.toggle("isadmin",on);$("login").classList.toggle("hide",on);$("panel").classList.toggle("hide",!on);if(on){fillForms();renderAdminList();renderTeamAdmin()}};
 const open=v=>{document.body.classList.toggle("adm",v);if(v)showPanel()};
 $("openAdmin").onclick=()=>open(true);
+$("devLink").onclick=e=>{e.preventDefault();open(true)};
 $("closeAdmin").onclick=()=>{open(false);if(location.hash==="#admin")history.replaceState(null,"",location.pathname)};
 $("shade").onclick=()=>$("closeAdmin").click();
 if(location.hash==="#admin")open(true);
 addEventListener("hashchange",()=>{if(location.hash==="#admin")open(true)});
 document.body.classList.toggle("isadmin",loggedIn());
+document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===t));document.querySelectorAll(".tpane").forEach(p=>p.classList.toggle("hide",p.id!==t.dataset.tab))});
 
 const gh=(method,body)=>fetch(`https://api.github.com/repos/${repo}/contents/games.json`,{method,headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"},body:body&&JSON.stringify(body)});
 const b64=s=>btoa(unescape(encodeURIComponent(s)));
-async function saveList(next,message,nextSet){
-  const cur=await gh("GET");if(!cur.ok&&cur.status!==404)throw new Error(cur.status);
-  const sha=cur.ok?(await cur.json()).sha:undefined;
-  const r=await gh("PUT",{message,content:b64(JSON.stringify({formUrl:nextSet?.formUrl??formUrl,founder:nextSet?.founder??founder,games:next},null,2)+"\n"),sha});
-  if(!r.ok)throw new Error(r.status);
-  list=next;if(nextSet){formUrl=nextSet.formUrl;founder=nextSet.founder;setApply()}
+let saving=Promise.resolve();
+// save games + settings together; queued so two saves never clash
+function save(nextList,nextSite,message){
+  const run=async()=>{
+    const cur=await gh("GET");if(!cur.ok&&cur.status!==404)throw new Error(cur.status);
+    const sha=cur.ok?(await cur.json()).sha:undefined;
+    const body={...nextSite,games:nextList};
+    const r=await gh("PUT",{message,content:b64(JSON.stringify(body,null,2)+"\n"),sha});
+    if(!r.ok)throw new Error(r.status);
+    list=nextList;site=nextSite;applySite();render();
+  };
+  const p=saving.then(run,run);saving=p.catch(()=>{});return p;
 }
+
 $("login").onsubmit=async e=>{
   e.preventDefault();
   const r=$("lRepo").value.trim().replace(/^https:\/\/github\.com\//,"").replace(/\/$/,""),t=$("lToken").value.trim();
@@ -448,35 +540,78 @@ $("login").onsubmit=async e=>{
   }catch{$("lMsg").textContent="Couldn't log in. Check the repo name and token."}
 };
 $("logout").onclick=()=>{repo=token=null;store.set("dd_repo",null);store.set("dd_token",null);showPanel()};
+const busy=(btn,msgEl,text)=>{btn.disabled=true;msgEl.textContent=text};
+const done=(btn,msgEl,text)=>{btn.disabled=false;msgEl.textContent=text};
+const FAIL="Couldn't save. Check your internet and try again.";
+
+// games tab
 $("add").onsubmit=async e=>{
   e.preventDefault();const placeId=placeFromLink($("aUrl").value);
   if(!placeId){$("aMsg").textContent="Use the game's page link, like roblox.com/games/123456/Name";return}
   if(list.some(g=>g.placeId===placeId)){$("aMsg").textContent="That game is already on the site.";return}
-  $("addBtn").disabled=true;$("aMsg").textContent="Looking it up on Roblox…";
+  busy($("addBtn"),$("aMsg"),"Looking it up on Roblox…");
   try{const universeId=await universeOf(placeId);if(!universeId)throw new Error("nogame");
     await loadInfo([universeId]);$("aMsg").textContent=`Found ${info[universeId]?.name||"the game"}. Saving…`;
-    await saveList([...list,{placeId,universeId}],"Add game "+placeId);render();$("add").reset();$("aMsg").textContent="Added. Visitors see it within about a minute.";
-  }catch(err){$("aMsg").textContent=err.message==="nogame"?"Couldn't find that game on Roblox.":"Something went wrong. Try again in a moment."}
-  $("addBtn").disabled=false;
-};
-$("formLink").onsubmit=async e=>{
-  e.preventDefault();const u=$("fForm").value.trim(),f=$("fFounder").value.trim()||"@djbmx123";
-  if(u&&!/^https:\/\//i.test(u)){$("fMsg").textContent="Paste a full link that starts with https://";return}
-  $("formBtn").disabled=true;$("fMsg").textContent="Saving…";
-  try{await saveList(list,"Update site settings",{formUrl:u,founder:f});$("fMsg").textContent="Saved. Visitors see it within about a minute."}catch{$("fMsg").textContent="Couldn't save. Try again."}
-  $("formBtn").disabled=false;
+    await save([...list,{placeId,universeId}],site,"Add game "+placeId);$("add").reset();done($("addBtn"),$("aMsg"),"Added. Visitors see it within about a minute.");
+  }catch(err){done($("addBtn"),$("aMsg"),err.message==="nogame"?"Couldn't find that game on Roblox.":FAIL)}
 };
 function renderAdminList(){
   if(!loggedIn())return;
-  $("list").innerHTML=list.map(g=>{const i=info[g.universeId]||{};return `<div class="item">${i.thumb?`<img src="${esc(i.thumb)}" alt="">`:`<span class="ph"></span>`}
-    <div>${esc(i.name||"Game "+g.placeId)}<small>${i.visits!=null?fmt(i.visits):"–"} visits · ${i.playing!=null?fmt(i.playing):"–"} playing</small></div>
-    <button data-del="${esc(g.placeId)}">Remove</button></div>`}).join("")||`<p class="hint">No games yet. Paste a link above.</p>`;
+  let v=0,p=0;for(const g of list){v+=+info[g.universeId]?.visits||0;p+=+info[g.universeId]?.playing||0}
+  $("mGames").textContent=list.length;$("mVisits").textContent=fmt(v);$("mPlaying").textContent=fmt(p);
+  $("list").innerHTML=list.map((g,k)=>{const i=info[g.universeId]||{},f=site.featured===g.placeId;return `<div class="item">${i.thumb?`<img src="${esc(i.thumb)}" alt="">`:`<span class="ph"></span>`}
+    <div>${f?"★ ":""}${esc(i.name||"Game "+g.placeId)}<small>${i.visits!=null?fmt(i.visits):"–"} visits · ${i.playing!=null?fmt(i.playing):"–"} playing</small></div>
+    <span class="acts"><button data-act="up" data-k="${k}" aria-label="Move up" ${k?"":"disabled"}>↑</button><button data-act="down" data-k="${k}" aria-label="Move down" ${k<list.length-1?"":"disabled"}>↓</button><button data-act="star" data-k="${k}" class="${f?"star":""}" aria-label="Feature this game">★</button><button data-act="del" data-k="${k}" aria-label="Remove">✕</button></span></div>`}).join("")||`<p class="hint">No games yet. Paste a link above.</p>`;
 }
 $("list").addEventListener("click",async e=>{
-  const id=e.target.dataset.del;if(!id)return;
-  if(e.target.dataset.sure!=="1"){e.target.dataset.sure="1";e.target.textContent="Sure?";setTimeout(()=>{e.target.dataset.sure="";e.target.textContent="Remove"},3000);return}
-  e.target.disabled=true;
-  try{await saveList(list.filter(g=>g.placeId!==id),"Remove game "+id);render()}catch{$("aMsg").textContent="Couldn't remove it. Try again."}
+  const b=e.target.closest("button[data-act]");if(!b)return;const k=+b.dataset.k,act=b.dataset.act,g=list[k];if(!g)return;
+  let next=[...list],ns={...site},msg="";
+  if(act==="up"){[next[k-1],next[k]]=[next[k],next[k-1]];msg="Move game up"}
+  if(act==="down"){[next[k+1],next[k]]=[next[k],next[k+1]];msg="Move game down"}
+  if(act==="star"){ns.featured=site.featured===g.placeId?"":g.placeId;msg="Change featured game"}
+  if(act==="del"){if(b.dataset.sure!=="1"){b.dataset.sure="1";b.textContent="Sure?";setTimeout(()=>{b.dataset.sure="";b.textContent="✕"},3000);return}
+    next=next.filter(x=>x!==g);if(ns.featured===g.placeId)ns.featured="";msg="Remove game "+g.placeId}
+  $("aMsg").textContent="Saving…";
+  try{await save(next,ns,msg);$("aMsg").textContent="Saved."}catch{$("aMsg").textContent=FAIL}
+});
+$("refreshBtn").onclick=async()=>{busy($("refreshBtn"),$("aMsg"),"Getting fresh stats from Roblox…");await loadInfo(list.map(g=>g.universeId));updateNumbers();done($("refreshBtn"),$("aMsg"),"Stats refreshed.")};
+
+// site tab
+$("siteForm").onsubmit=async e=>{
+  e.preventDefault();
+  const f=$("sForm").value.trim(),d=$("sDiscord").value.trim();
+  if(f&&!/^https:\/\//i.test(f)){$("sMsg").textContent="The form link has to start with https://";return}
+  if(d&&!/^https:\/\/(discord\.gg|discord\.com|www\.discord\.com)\//i.test(d)){$("sMsg").textContent="Use a discord.gg invite link.";return}
+  const ns={...site,name:str($("sName").value,DEF.name),tagline:str($("sTag").value,DEF.tagline),founder:str($("sFounder").value,DEF.founder),formUrl:f,appsOpen:$("sOpen").checked,discord:d};
+  busy($("siteBtn"),$("sMsg"),"Saving…");
+  try{await save(list,ns,"Update site settings");done($("siteBtn"),$("sMsg"),"Saved. Visitors see it within about a minute.")}catch{done($("siteBtn"),$("sMsg"),FAIL)}
+};
+
+// announce tab
+$("newsForm").onsubmit=async e=>{
+  e.preventDefault();const ns={...site,banner:$("nText").value.trim(),bannerOn:$("nOn").checked};
+  busy($("newsBtn"),$("nMsg"),"Saving…");
+  try{await save(list,ns,"Update announcement");done($("newsBtn"),$("nMsg"),ns.bannerOn&&ns.banner?"Announcement is live.":"Announcement is hidden.")}catch{done($("newsBtn"),$("nMsg"),FAIL)}
+};
+
+// team tab
+function renderTeamAdmin(){
+  $("teamAdmin").innerHTML=site.team.map((m,k)=>`<div class="item"><span class="ph" style="width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800">${esc((m.name.replace(/^@/,"")[0]||"?").toUpperCase())}</span>
+    <div>${esc(m.name)}<small>${esc(m.role||"")}</small></div>
+    <span class="acts"><button data-act="up" data-k="${k}" ${k?"":"disabled"} aria-label="Move up">↑</button><button data-act="down" data-k="${k}" ${k<site.team.length-1?"":"disabled"} aria-label="Move down">↓</button><button data-act="del" data-k="${k}" aria-label="Remove">✕</button></span></div>`).join("")||`<p class="hint">No team members yet.</p>`;
+}
+$("teamForm").onsubmit=async e=>{
+  e.preventDefault();const m={name:$("tName").value.trim(),role:$("tRole").value.trim()};if(!m.name)return;
+  busy($("teamBtn"),$("tMsg"),"Saving…");
+  try{await save(list,{...site,team:[...site.team,m]},"Add team member");$("teamForm").reset();renderTeamAdmin();done($("teamBtn"),$("tMsg"),"Added to the Team section.")}catch{done($("teamBtn"),$("tMsg"),FAIL)}
+};
+$("teamAdmin").addEventListener("click",async e=>{
+  const b=e.target.closest("button[data-act]");if(!b)return;const k=+b.dataset.k,act=b.dataset.act;const t=[...site.team];
+  if(act==="up")[t[k-1],t[k]]=[t[k],t[k-1]];
+  if(act==="down")[t[k+1],t[k]]=[t[k],t[k+1]];
+  if(act==="del"){if(b.dataset.sure!=="1"){b.dataset.sure="1";b.textContent="Sure?";setTimeout(()=>{b.dataset.sure="";b.textContent="✕"},3000);return}t.splice(k,1)}
+  $("tMsg").textContent="Saving…";
+  try{await save(list,{...site,team:t},"Update team");renderTeamAdmin();$("tMsg").textContent="Saved."}catch{$("tMsg").textContent=FAIL}
 });
 }
 </script>
