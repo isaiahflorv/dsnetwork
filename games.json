@@ -8,7 +8,12 @@
   "banner": "Dropping Friday!",
   "bannerOn": true,
   "featured": "",
-  "team": [],
+  "team": [
+    {
+      "name": "@isaiahflorv",
+      "role": "Founder"
+    }
+  ],
   "games": [
     {
       "placeId": "113090773455157",
