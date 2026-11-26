@@ -506,10 +506,21 @@ const showPanel=()=>{const on=loggedIn();document.body.classList.toggle("isadmin
 const open=v=>{document.body.classList.toggle("adm",v);if(v)showPanel()};
 $("openAdmin").onclick=()=>open(true);
 $("devLink").onclick=e=>{e.preventDefault();open(true)};
-$("closeAdmin").onclick=()=>{open(false);if(location.hash==="#admin")history.replaceState(null,"",location.pathname)};
+$("closeAdmin").onclick=()=>{open(false);clean()};
 $("shade").onclick=()=>$("closeAdmin").click();
-if(location.hash==="#admin")open(true);
-addEventListener("hashchange",()=>{if(location.hash==="#admin")open(true)});
+// keep the address bar as just dsnetwork.uk
+const clean=()=>{if(location.hash)history.replaceState(null,"",location.pathname+location.search)};
+document.addEventListener("click",e=>{
+  const l=e.target.closest('a[href^="#"]');if(!l||e.defaultPrevented)return;
+  const id=l.getAttribute("href").slice(1);e.preventDefault();
+  if(id==="admin"){open(true);return}
+  const t=id&&id!=="top"?document.getElementById(id):null;
+  t?t.scrollIntoView({behavior:reduce?"auto":"smooth"}):scrollTo({top:0,behavior:reduce?"auto":"smooth"});
+  clean();
+});
+if(location.hash==="#admin"){open(true);clean()}
+else if(location.hash){const t=document.getElementById(location.hash.slice(1));clean();if(t)setTimeout(()=>t.scrollIntoView(),300)}
+addEventListener("hashchange",()=>{if(location.hash==="#admin"){open(true);clean()}});
 document.body.classList.toggle("isadmin",loggedIn());
 document.querySelectorAll(".tab").forEach(t=>t.onclick=()=>{document.querySelectorAll(".tab").forEach(x=>x.classList.toggle("on",x===t));document.querySelectorAll(".tpane").forEach(p=>p.classList.toggle("hide",p.id!==t.dataset.tab))});
 
