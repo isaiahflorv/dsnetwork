@@ -188,6 +188,9 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
 .member{border:1px solid var(--line);background:var(--bg2);padding:24px 20px;text-align:center;transition:transform .3s,border-color .3s}
 .member:hover{transform:translateY(-4px);border-color:var(--line2)}
 .av{width:64px;height:64px;margin:0 auto 14px;border-radius:50%;display:grid;place-items:center;font:900 24px Archivo;color:#0d0f12;background:var(--shine);background-size:250% 100%;animation:shine 6s linear infinite;box-shadow:0 0 24px rgba(205,214,228,.25)}
+.av img{width:100%;height:100%;border-radius:50%;object-fit:cover;display:block;background:#1c1f24}
+.av.pic{padding:3px}
+a.member{display:block}
 .member h3{font-size:17px;letter-spacing:0;text-transform:none}
 .member p{color:var(--mute);font-size:13px;margin-top:4px;text-transform:uppercase;letter-spacing:.14em;font-weight:600}
 .flink{color:var(--gold2);text-decoration:underline;margin-left:6px}
@@ -375,11 +378,11 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
 
     <div class="tpane hide" id="tTeam">
       <form id="teamForm">
-        <div class="two"><label>Name<input id="tName" maxlength="30" placeholder="@username" required></label><label>Role<input id="tRole" maxlength="30" placeholder="Scripter" required></label></div>
+        <div class="two"><label>Roblox username<input id="tName" maxlength="30" placeholder="djbmx123" required autocapitalize="off" autocomplete="off"></label><label>Role<input id="tRole" maxlength="30" placeholder="Scripter" required></label></div>
         <button class="btn" id="teamBtn" type="submit">Add team member</button>
         <p class="msg" id="tMsg" role="status"></p>
       </form>
-      <p class="hint">The Team section only shows on the site once you add someone.</p>
+      <p class="hint">Type their Roblox username and their Roblox avatar shows up by itself. The Team section only shows on the site once you add someone.</p>
       <div class="list" id="teamAdmin"></div>
     </div>
 
@@ -414,7 +417,30 @@ $("faqList").innerHTML=faq.map(f=>`<details class="reveal"><summary>${f[0]}</sum
 const DEF={formUrl:"",founder:"@djbmx123",name:"D$ Devs",tagline:"D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.",discord:"",appsOpen:true,banner:"",bannerOn:false,featured:"",team:[]};
 let site={...DEF};
 const str=(v,d)=>typeof v==="string"&&v.trim()?v.trim():d;
-const readSite=d=>{d=d&&!Array.isArray(d)?d:{};return{formUrl:str(d.formUrl,""),founder:str(d.founder,DEF.founder),name:str(d.name,DEF.name),tagline:str(d.tagline,DEF.tagline),discord:str(d.discord,""),appsOpen:d.appsOpen!==false,banner:str(d.banner,""),bannerOn:!!d.bannerOn,featured:String(d.featured||""),team:Array.isArray(d.team)?d.team.filter(m=>m&&typeof m.name==="string").slice(0,60):[]}};
+const readSite=d=>{d=d&&!Array.isArray(d)?d:{};return{formUrl:str(d.formUrl,""),founder:str(d.founder,DEF.founder),name:str(d.name,DEF.name),tagline:str(d.tagline,DEF.tagline),discord:str(d.discord,""),appsOpen:d.appsOpen!==false,banner:str(d.banner,""),bannerOn:!!d.bannerOn,featured:String(d.featured||""),team:Array.isArray(d.team)?d.team.filter(m=>m&&typeof m.name==="string").map(m=>({name:m.name,role:String(m.role||""),userId:/^\d+$/.test(String(m.userId||""))?String(m.userId):""})).slice(0,60):[]}};
+// ---------- Roblox avatars ----------
+const avatars={};let avBusy=false;
+const avHtml=m=>{const a=m.userId&&avatars[m.userId];return a?`<div class="av pic"><img src="${esc(a)}" alt="" loading="lazy"></div>`:`<div class="av">${esc((m.name.replace(/^@/,"")[0]||"?").toUpperCase())}</div>`};
+async function findUser(name){
+  name=name.trim().replace(/^@/,"");
+  if(/^\d+$/.test(name)){const u=await rbx("users",`/v1/users/${name}`);return{id:String(u.id),name:u.name}}
+  try{const r=await fetch(`https://users.${PROXY}/v1/usernames/users`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({usernames:[name],excludeBannedUsers:false})});
+    if(r.ok){const j=await r.json(),u=j.data?.[0];if(u)return{id:String(u.id),name:u.name}}}catch{}
+  const s=await rbx("users",`/v1/users/search?keyword=${encodeURIComponent(name)}&limit=10`);
+  const u=(s.data||[]).find(x=>x.name.toLowerCase()===name.toLowerCase());
+  return u?{id:String(u.id),name:u.name}:null;
+}
+async function loadAvatars(){
+  if(avBusy)return;avBusy=true;
+  try{
+    for(const m of site.team)if(!m.userId){try{const u=await findUser(m.name);if(u)m.userId=u.id}catch{}}
+    const ids=[...new Set(site.team.map(m=>m.userId).filter(id=>id&&!avatars[id]))];
+    if(ids.length){const t=await rbx("thumbnails",`/v1/users/avatar-headshot?userIds=${ids.join(",")}&size=150x150&format=Png&isCircular=false`);
+      let got=false;for(const d of t.data||[])if(d.imageUrl&&/^https:\/\/[\w.-]*rbxcdn\.com\//.test(d.imageUrl)){avatars[d.targetId]=d.imageUrl;got=true}
+      if(got){avBusy=false;applySite();if(typeof renderTeamAdmin==="function"&&loggedIn())renderTeamAdmin();return}}
+  }catch{}
+  avBusy=false;
+}
 function applySite(){
   document.querySelectorAll(".sitename").forEach(e=>e.textContent=site.name);
   $("tagline").textContent=site.tagline;$("founder").textContent=site.founder;
@@ -425,7 +451,9 @@ function applySite(){
   for(const id of ["discordBtn","discordFoot"]){$(id).classList.toggle("hide",!dc);if(dc)$(id).href=site.discord}
   $("banner").classList.toggle("hide",!(site.bannerOn&&site.banner));$("bannerText").textContent=site.banner;
   $("team").classList.toggle("hide",!site.team.length);
-  $("teamList").innerHTML=site.team.map(m=>`<div class="member reveal in"><div class="av">${esc((m.name.replace(/^@/,"")[0]||"?").toUpperCase())}</div><h3>${esc(m.name)}</h3><p>${esc(m.role||"")}</p></div>`).join("");
+  $("teamList").innerHTML=site.team.map(m=>{const a=m.userId&&avatars[m.userId],tag=m.userId?"a":"div",href=m.userId?` href="https://www.roblox.com/users/${esc(m.userId)}/profile" target="_blank" rel="noopener"`:"";
+    return `<${tag} class="member reveal in"${href}>${avHtml(m)}<h3>@${esc(m.name.replace(/^@/,""))}</h3><p>${esc(m.role||"")}</p></${tag}>`}).join("");
+  loadAvatars();
 }
 
 // ---------- Roblox ----------
@@ -607,14 +635,18 @@ $("newsForm").onsubmit=async e=>{
 
 // team tab
 function renderTeamAdmin(){
-  $("teamAdmin").innerHTML=site.team.map((m,k)=>`<div class="item"><span class="ph" style="width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800">${esc((m.name.replace(/^@/,"")[0]||"?").toUpperCase())}</span>
-    <div>${esc(m.name)}<small>${esc(m.role||"")}</small></div>
+  $("teamAdmin").innerHTML=site.team.map((m,k)=>`<div class="item">${m.userId&&avatars[m.userId]?`<img src="${esc(avatars[m.userId])}" alt="" style="width:36px;height:36px;border-radius:50%">`:`<span class="ph" style="width:36px;height:36px;border-radius:50%;display:grid;place-items:center;font-weight:800">${esc((m.name.replace(/^@/,"")[0]||"?").toUpperCase())}</span>`}
+    <div>@${esc(m.name.replace(/^@/,""))}<small>${esc(m.role||"")}${m.userId?"":" · avatar not found"}</small></div>
     <span class="acts"><button data-act="up" data-k="${k}" ${k?"":"disabled"} aria-label="Move up">↑</button><button data-act="down" data-k="${k}" ${k<site.team.length-1?"":"disabled"} aria-label="Move down">↓</button><button data-act="del" data-k="${k}" aria-label="Remove">✕</button></span></div>`).join("")||`<p class="hint">No team members yet.</p>`;
 }
 $("teamForm").onsubmit=async e=>{
-  e.preventDefault();const m={name:$("tName").value.trim(),role:$("tRole").value.trim()};if(!m.name)return;
-  busy($("teamBtn"),$("tMsg"),"Saving…");
-  try{await save(list,{...site,team:[...site.team,m]},"Add team member");$("teamForm").reset();renderTeamAdmin();done($("teamBtn"),$("tMsg"),"Added to the Team section.")}catch{done($("teamBtn"),$("tMsg"),FAIL)}
+  e.preventDefault();const raw=$("tName").value.trim(),role=$("tRole").value.trim();if(!raw)return;
+  busy($("teamBtn"),$("tMsg"),"Looking up that Roblox user…");
+  let u=null;try{u=await findUser(raw)}catch{}
+  if(!u){done($("teamBtn"),$("tMsg"),"Couldn't find that Roblox username. Check the spelling.");return}
+  if(site.team.some(m=>m.userId===u.id)){done($("teamBtn"),$("tMsg"),"They're already on the team.");return}
+  $("tMsg").textContent=`Found @${u.name}. Saving…`;
+  try{await save(list,{...site,team:[...site.team,{name:u.name,role,userId:u.id}]},"Add team member");$("teamForm").reset();renderTeamAdmin();done($("teamBtn"),$("tMsg"),"Added with their Roblox avatar.")}catch{done($("teamBtn"),$("tMsg"),FAIL)}
 };
 $("teamAdmin").addEventListener("click",async e=>{
   const b=e.target.closest("button[data-act]");if(!b)return;const k=+b.dataset.k,act=b.dataset.act;const t=[...site.team];
