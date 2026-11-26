@@ -1,5 +1,10 @@
 {
   "formUrl": "",
   "founder": "@djbmx123",
-  "games": []
+  "games": [
+    {
+      "placeId": "113090773455157",
+      "universeId": 10772857425
+    }
+  ]
 }
