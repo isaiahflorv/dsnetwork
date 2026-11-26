@@ -5,13 +5,14 @@
   "tagline": "D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.",
   "discord": "",
   "appsOpen": true,
-  "banner": "",
+  "banner": "Dropping Friday!",
   "bannerOn": true,
   "featured": "",
   "team": [
     {
       "name": "@djbmx123",
-      "role": "Founder"
+      "role": "Founder",
+      "userId": "14115281"
     }
   ],
   "games": [
