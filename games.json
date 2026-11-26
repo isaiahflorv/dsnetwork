@@ -8,13 +8,7 @@
   "banner": "Dropping Friday!",
   "bannerOn": true,
   "featured": "113090773455157",
-  "team": [
-    {
-      "name": "@djbmx123",
-      "role": "Founder",
-      "userId": "14115281"
-    }
-  ],
+  "team": [],
   "games": [
     {
       "placeId": "113090773455157",
