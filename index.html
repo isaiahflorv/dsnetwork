@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>D$ Devs · Roblox Studio</title>
+<link rel="icon" href="icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{color-scheme:dark;--bg:#050914;--ink:#fff;--mute:#9fb0d6;--blue:#2f6bff;--blue2:#5b9bff;--line:rgba(91,155,255,.22);--card:rgba(13,22,48,.78)}
+*{box-sizing:border-box;min-width:0}
+html{scroll-behavior:smooth;scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 Inter,system-ui,sans-serif;overflow-x:clip}
+a{color:inherit;text-decoration:none}
+h1,h2,h3{font-family:"Chakra Petch",sans-serif;line-height:1.1;margin:0;text-wrap:balance}
+h2{font-size:clamp(24px,3.4vw,32px)}
+p{margin:0}
+.bg{position:fixed;inset:-10%;z-index:0;pointer-events:none;background:url(pattern.png) 0 0/680px auto repeat;opacity:.35;animation:drift 60s linear infinite}
+.bg::after{content:"";position:absolute;inset:0;background:radial-gradient(ellipse at 50% 20%,transparent,var(--bg) 75%)}
+@keyframes drift{to{background-position:680px -215px}}
+main,nav,footer{position:relative;z-index:1}
+.wrap{max-width:920px;margin:0 auto;padding:0 max(4vw,16px)}
+
+nav{position:sticky;top:0;z-index:5;background:rgba(5,9,20,.72);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:10px}
+.brand{display:flex;align-items:center;gap:9px;font:700 18px "Chakra Petch"}
+.brand img{width:34px;height:34px;border-radius:9px;box-shadow:0 0 16px rgba(91,155,255,.5)}
+
+.btn{position:relative;overflow:hidden;display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:0 20px;border-radius:12px;border:0;cursor:pointer;font:600 15px Inter,sans-serif;color:#fff;background:linear-gradient(180deg,var(--blue2),var(--blue));box-shadow:0 4px 0 #1a3fae,0 0 22px rgba(47,107,255,.45);transition:transform .16s cubic-bezier(.3,1.6,.5,1),box-shadow .16s;-webkit-tap-highlight-color:transparent}
+.btn:hover{transform:translateY(-2px);box-shadow:0 6px 0 #1a3fae,0 0 32px rgba(91,155,255,.65)}
+.btn:active{transform:translateY(4px);box-shadow:0 0 0 #1a3fae,0 0 14px rgba(47,107,255,.4)}
+.btn.ghost{background:rgba(255,255,255,.06);box-shadow:inset 0 0 0 1px var(--line)}
+.btn:disabled{opacity:.5;pointer-events:none}
+.btn:focus-visible,.card:focus-visible,.arrow:focus-visible,input:focus-visible,.lock:focus-visible{outline:3px solid var(--blue2);outline-offset:3px}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.5);transform:scale(0);animation:rip .55s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(4);opacity:0}}
+
+.hero{text-align:center;padding:48px 0 26px}
+.icon{width:128px;height:128px;margin:0 auto 18px;border-radius:30px;overflow:hidden;box-shadow:0 0 0 1px rgba(91,155,255,.5),0 0 50px rgba(47,107,255,.6);animation:bob 5s ease-in-out infinite}
+.icon img{width:100%;height:100%;display:block}
+@keyframes bob{50%{transform:translateY(-8px) rotate(-2deg)}}
+.hero h1{font-size:clamp(30px,5vw,44px);text-shadow:0 0 24px rgba(91,155,255,.6)}
+.founder{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:7px 16px;border-radius:99px;background:rgba(47,107,255,.14);border:1px solid rgba(91,155,255,.4);font-size:14px;color:var(--mute);box-shadow:0 0 18px rgba(47,107,255,.2)}
+.founder b{color:#fff;font-weight:600}
+.hero p{color:var(--mute);max-width:46ch;margin:10px auto 0;font-size:16px}
+
+section{padding:28px 0}
+.top{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:14px}
+.top p{color:var(--mute);margin-top:4px}
+.arrows{display:flex;gap:8px;flex:none}
+.arrow{width:42px;height:42px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:#fff;font:700 18px Inter;cursor:pointer;transition:transform .15s,background .15s}
+.arrow:hover{background:rgba(47,107,255,.3)}
+.arrow:active{transform:scale(.9)}
+
+.row{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 2px 16px;scrollbar-width:thin;scrollbar-color:var(--blue) transparent}
+.row::-webkit-scrollbar{height:6px}.row::-webkit-scrollbar-thumb{background:var(--blue);border-radius:9px}
+.row>*{scroll-snap-align:start;flex:none}
+
+.card{width:260px;height:320px;position:relative;border-radius:20px;overflow:hidden;border:1px solid var(--line);background:linear-gradient(135deg,#1d3fa8,#0b1430);display:flex;flex-direction:column;justify-content:flex-end;transition:transform .2s,box-shadow .2s,border-color .2s}
+.card:hover{transform:translateY(-4px);border-color:var(--blue2);box-shadow:0 0 30px rgba(47,107,255,.45)}
+.card img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.card:hover img{transform:scale(1.06)}
+.card::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,9,20,.05) 25%,rgba(5,9,20,.75) 60%,rgba(5,9,20,.96));z-index:1}
+.card .genre{position:absolute;top:12px;left:12px;z-index:2;font-size:12px;background:rgba(5,9,20,.6);backdrop-filter:blur(6px);border:1px solid rgba(255,255,255,.18);padding:3px 10px;border-radius:99px}
+.card .info{position:relative;z-index:2;padding:16px}
+.card h3{font-size:20px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.nums{display:flex;gap:18px;margin-top:10px;font-size:12px;color:var(--mute)}
+.nums b{display:flex;align-items:center;gap:6px;color:#fff;font:700 16px "Chakra Petch";white-space:nowrap}
+.live{width:8px;height:8px;border-radius:50%;background:#3ddc84;box-shadow:0 0 8px #3ddc84;animation:blink 1.6s ease-in-out infinite}
+@keyframes blink{50%{opacity:.35}}
+.empty{width:100%;padding:40px 20px;text-align:center;color:var(--mute);border:1px dashed var(--line);border-radius:18px}
+
+.skill{width:190px;background:var(--card);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:16px;padding:16px}
+.skill h3{font-size:17px;color:var(--blue2)}
+.skill p{color:var(--mute);font-size:14px;margin-top:6px}
+
+.apply{background:radial-gradient(ellipse at top left,rgba(91,155,255,.45),transparent 60%),linear-gradient(140deg,#16339a,#0b1640);border:1px solid rgba(91,155,255,.45);border-radius:22px;padding:28px;display:flex;justify-content:space-between;align-items:center;gap:20px;flex-wrap:wrap;box-shadow:0 0 50px rgba(47,107,255,.25)}
+.apply p{color:#c8d4f2;margin-top:6px;max-width:44ch}
+
+footer{padding:26px 0 34px;color:var(--mute);font-size:13px}
+footer .wrap{display:flex;justify-content:center;align-items:center;gap:12px;flex-wrap:wrap}
+.lock{display:none;min-height:36px;padding:0 12px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--mute);font:500 13px Inter;cursor:pointer}
+.isadmin .lock{display:inline-flex;align-items:center}
+
+.shade{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);z-index:31;background:#0a1128;border-left:1px solid var(--line);transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);overflow-y:auto;padding:20px}
+.adm .shade{opacity:1;pointer-events:auto}.adm .drawer{transform:none}
+.drawer header{display:flex;justify-content:space-between;align-items:center;margin-bottom:16px}
+.drawer form{display:grid;gap:10px}
+label{display:grid;gap:5px;font-size:13px;color:var(--mute)}
+input{width:100%;font:16px Inter,sans-serif;color:#fff;background:#060b1c;border:1px solid var(--line);border-radius:10px;padding:11px 12px}
+.msg{font-size:13px;min-height:18px;color:var(--blue2)}
+.list{display:grid;gap:8px;margin-top:20px}
+.item{display:flex;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:12px;padding:8px}
+.item img,.item .ph{width:64px;height:40px;border-radius:7px;object-fit:cover;background:#1d3fa8;flex:none}
+.item div{flex:1;font-size:14px}
+.item small{display:block;color:var(--mute);font-size:12px}
+.item button{min-height:36px;padding:0 10px;border-radius:8px;border:1px solid var(--line);background:none;color:#fff;cursor:pointer;font-size:13px}
+.hint{font-size:12px;color:var(--mute);line-height:1.5}
+.hide{display:none!important}
+
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .6s,transform .6s}
+.reveal.in{opacity:1;transform:none}
+@media(max-width:560px){.arrows{display:none}.card{width:78vw}.apply{padding:22px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="bg" aria-hidden="true"></div>
+
+<nav>
+  <div class="wrap">
+    <a class="brand" href="#top"><img src="icon.png" alt="">D$ Devs</a>
+    <a class="btn" href="#apply">Work with us</a>
+  </div>
+</nav>
+
+<main id="top" class="wrap">
+  <header class="hero">
+    <div class="icon"><img src="icon.png" alt="D$ Devs logo"></div>
+    <h1>D$ Devs</h1>
+    <p>A Roblox development group. Here are the games we've helped build.</p>
+    <div class="founder">Founded by: <b id="founder">@djbmx123</b></div>
+  </header>
+
+  <section class="reveal">
+    <div class="top">
+      <div><h2>Our games</h2><p>Swipe sideways. Tap a game to play it.</p></div>
+      <div class="arrows"><button class="arrow" data-row="games" data-d="-1" aria-label="Previous games">‹</button><button class="arrow" data-row="games" data-d="1" aria-label="Next games">›</button></div>
+    </div>
+    <div class="row" id="games" tabindex="0" aria-label="Games"><div class="empty">Loading games…</div></div>
+  </section>
+
+  <section class="reveal">
+    <div class="top"><div><h2>What we do</h2></div></div>
+    <div class="row" id="skills" tabindex="0" aria-label="Skills"></div>
+  </section>
+
+  <section id="apply" class="reveal">
+    <div class="apply">
+      <div>
+        <h2>Work with us</h2>
+        <p>Tell us your name, age, what you do and the games you've worked on.</p>
+      </div>
+      <a class="btn" id="applyBtn" href="#" target="_blank" rel="noopener">Apply now →</a>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© <span id="yr"></span> D$ Devs · Not affiliated with Roblox Corporation.</span>
+    <button class="lock" id="openAdmin">🔒 Admin</button>
+  </div>
+</footer>
+
+<div class="shade" id="shade"></div>
+<aside class="drawer" id="drawer" aria-label="Admin">
+  <header><h2 style="font-size:22px">Admin</h2><button class="btn ghost" id="closeAdmin" style="min-height:40px">Close</button></header>
+
+  <!-- step 1: log this device in -->
+  <form id="login">
+    <p class="hint">Log in once on each device you want admin on (your iPhone, your computer). Nobody else can see or use this.</p>
+    <label>GitHub repo (username/repo)<input id="lRepo" placeholder="yourname/yourname.github.io" required autocomplete="off"></label>
+    <label>GitHub token<input id="lToken" type="password" placeholder="github_pat_…" required autocomplete="off"></label>
+    <button class="btn" type="submit">Log in on this device</button>
+    <p class="msg" id="lMsg" role="status"></p>
+  </form>
+
+  <!-- step 2: add games by link -->
+  <div id="panel" class="hide">
+    <form id="add">
+      <label>Roblox game link<input id="aUrl" type="url" placeholder="https://www.roblox.com/games/123456/..." required></label>
+      <button class="btn" id="addBtn" type="submit">Add game</button>
+      <p class="msg" id="aMsg" role="status"></p>
+    </form>
+    <p class="hint">The name, thumbnail, visits and players fill in from Roblox by themselves and update every minute.</p>
+    <form id="formLink" style="margin-top:20px">
+      <label>Application form link<input id="fForm" type="url" placeholder="https://forms.gle/..."></label>
+      <label>Founded by<input id="fFounder" placeholder="@djbmx123" maxlength="40"></label>
+      <button class="btn" id="formBtn" type="submit">Save settings</button>
+      <p class="msg" id="fMsg" role="status"></p>
+    </form>
+    <div class="list" id="list"></div>
+    <button class="btn ghost" id="logout" style="margin-top:20px;width:100%">Log out of this device</button>
+  </div>
+</aside>
+
+<script>
+{
+const PROXY = "roproxy.com"; // Roblox blocks websites from asking directly, so requests go through RoProxy
+const REFRESH_MS = 60000;
+
+const skills=[["Scripting","Game systems and data saving in Luau."],["Building","Maps that look great and run smooth."],["Modeling","Props, pets, vehicles and characters."],["UI","Clean menus, shops and HUDs."],["Animation & VFX","Effects that make games feel alive."]];
+const $=id=>document.getElementById(id);
+const esc=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const fmt=n=>{n=+n||0;for(const [v,s] of [[1e9,"B"],[1e6,"M"],[1e3,"K"]])if(n>=v)return (n/v).toFixed(n/v<10?1:0).replace(/\.0$/,"")+s;return String(n)};
+const store={get:k=>{try{return localStorage.getItem(k)}catch{return null}},set:(k,v)=>{try{v==null?localStorage.removeItem(k):localStorage.setItem(k,v)}catch{}}};
+
+$("yr").textContent=new Date().getFullYear();
+$("skills").innerHTML=skills.map(s=>`<div class="skill"><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join("");
+
+// ---------- Roblox lookups ----------
+const rbx=(sub,path)=>fetch(`https://${sub}.${PROXY}${path}`).then(r=>{if(!r.ok)throw new Error(r.status);return r.json()});
+const placeFromLink=u=>(String(u).match(/roblox\.com\/(?:[a-z]{2}\/)?games\/(\d+)/i)||[])[1];
+const universeOf=async placeId=>(await rbx("apis",`/universes/v1/places/${placeId}/universe`)).universeId;
+
+let list=[];          // [{placeId, universeId}] from games.json
+let formUrl="";       // application form link, also in games.json
+let founder="@djbmx123";
+const setApply=()=>{const ok=/^https:\/\//i.test(formUrl),b=$("applyBtn");b.href=ok?formUrl:"#apply";b.textContent=ok?"Apply now →":"Applications open soon";b.toggleAttribute("aria-disabled",!ok);ok?b.setAttribute("target","_blank"):b.removeAttribute("target");b.style.opacity=ok?"":".6"};
+let info={};          // universeId -> {name, visits, playing, genre, thumb}
+
+async function loadInfo(ids){
+  if(!ids.length)return;
+  const q=ids.join(",");
+  const [g,t]=await Promise.all([
+    rbx("games",`/v1/games?universeIds=${q}`).catch(()=>null),
+    rbx("thumbnails",`/v1/games/multiget/thumbnails?universeIds=${q}&countPerUniverse=1&size=768x432&format=Png`).catch(()=>null)
+  ]);
+  for(const d of g?.data||[])info[d.id]={...info[d.id],name:d.name,visits:d.visits,playing:d.playing,genre:d.genre&&d.genre!=="All"?d.genre:""};
+  for(const d of t?.data||[]){const u=d.thumbnails?.[0]?.imageUrl;if(u&&/^https:\/\/[\w.-]*rbxcdn\.com\//.test(u))info[d.universeId]={...info[d.universeId],thumb:u}}
+}
+
+// ---------- render ----------
+function render(){
+  const el=$("games");
+  if(!list.length){el.innerHTML=`<div class="empty">Games coming soon.</div>`;renderAdminList();return}
+  el.innerHTML=list.map(g=>{const i=info[g.universeId]||{};return `<a class="card" data-u="${esc(g.universeId)}" href="https://www.roblox.com/games/${esc(g.placeId)}" target="_blank" rel="noopener">
+    ${i.thumb?`<img src="${esc(i.thumb)}" alt="" loading="lazy">`:""}
+    ${i.genre?`<span class="genre">${esc(i.genre)}</span>`:""}
+    <div class="info"><h3>${esc(i.name||"Loading…")}</h3>
+      <div class="nums"><div><b data-v>${i.visits!=null?fmt(i.visits):"–"}</b>Visits</div><div><b><span class="live"></span><span data-p>${i.playing!=null?fmt(i.playing):"–"}</span></b>Playing</div></div>
+    </div></a>`}).join("");
+  renderAdminList();
+}
+// quiet update: only swaps the numbers, nothing reloads
+function updateNumbers(){
+  document.querySelectorAll(".card[data-u]").forEach(c=>{const i=info[c.dataset.u];if(!i)return;
+    const v=c.querySelector("[data-v]"),p=c.querySelector("[data-p]");
+    if(v&&i.visits!=null)v.textContent=fmt(i.visits);if(p&&i.playing!=null)p.textContent=fmt(i.playing)});
+  renderAdminList();
+}
+
+async function start(){
+  let data=null;
+  try{const r=await fetch("games.json?"+Date.now(),{cache:"no-store"});data=r.ok?await r.json():null}catch{}
+  list=Array.isArray(data)?data:Array.isArray(data?.games)?data.games:[];
+  formUrl=typeof data?.formUrl==="string"?data.formUrl:"";setApply();
+  founder=typeof data?.founder==="string"&&data.founder.trim()?data.founder:"@djbmx123";$("founder").textContent=founder;
+  list=list.filter(g=>/^\d+$/.test(g.placeId)&&/^\d+$/.test(String(g.universeId)));
+  render();
+  await loadInfo(list.map(g=>g.universeId));render();
+  setInterval(async()=>{await loadInfo(list.map(g=>g.universeId));updateNumbers()},REFRESH_MS);
+}
+start();
+
+// ---------- sideways rows, ripple, reveal ----------
+const slide=(row,d)=>row.scrollBy({left:d*row.clientWidth*.8,behavior:"smooth"});
+document.querySelectorAll(".arrow").forEach(b=>b.addEventListener("click",()=>slide($(b.dataset.row),+b.dataset.d)));
+document.querySelectorAll(".row").forEach(r=>{
+  r.addEventListener("keydown",e=>{if(e.key==="ArrowRight"){e.preventDefault();slide(r,1)}if(e.key==="ArrowLeft"){e.preventDefault();slide(r,-1)}});
+  r.addEventListener("wheel",e=>{if(Math.abs(e.deltaY)<=Math.abs(e.deltaX))return;const max=r.scrollWidth-r.clientWidth;if((e.deltaY>0&&r.scrollLeft<max-1)||(e.deltaY<0&&r.scrollLeft>0)){e.preventDefault();r.scrollLeft+=e.deltaY}},{passive:false});
+});
+document.addEventListener("pointerdown",e=>{const b=e.target.closest(".btn");if(!b)return;const r=b.getBoundingClientRect(),d=Math.max(r.width,r.height),s=document.createElement("span");s.className="ripple";s.style.cssText=`width:${d}px;height:${d}px;left:${e.clientX-r.left-d/2}px;top:${e.clientY-r.top-d/2}px`;b.appendChild(s);setTimeout(()=>s.remove(),600)});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");io.unobserve(e.target)}}),{threshold:.1});
+document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
+
+// ---------- admin (only on devices you log in on) ----------
+let repo=store.get("dd_repo"),token=store.get("dd_token");
+const loggedIn=()=>!!(repo&&token);
+const showPanel=()=>{const on=loggedIn();$("fForm").value=formUrl;$("fFounder").value=founder;document.body.classList.toggle("isadmin",on);$("login").classList.toggle("hide",on);$("panel").classList.toggle("hide",!on);renderAdminList()};
+const open=v=>{document.body.classList.toggle("adm",v);if(v)showPanel()};
+$("openAdmin").onclick=()=>open(true);$("closeAdmin").onclick=()=>{open(false);if(location.hash==="#admin")history.replaceState(null,"",location.pathname)};$("shade").onclick=()=>$("closeAdmin").click();
+if(location.hash==="#admin")open(true);
+addEventListener("hashchange",()=>{if(location.hash==="#admin")open(true)});
+document.body.classList.toggle("isadmin",loggedIn());
+
+const gh=(method,body)=>fetch(`https://api.github.com/repos/${repo}/contents/games.json`,{method,headers:{Authorization:"Bearer "+token,Accept:"application/vnd.github+json"},body:body&&JSON.stringify(body)});
+const b64=s=>btoa(unescape(encodeURIComponent(s)));
+async function saveList(next,message,nextForm){
+  const cur=await gh("GET");if(!cur.ok&&cur.status!==404)throw new Error(cur.status);
+  const sha=cur.ok?(await cur.json()).sha:undefined;
+  const r=await gh("PUT",{message,content:b64(JSON.stringify({formUrl:nextForm?.formUrl??formUrl,founder:nextForm?.founder??founder,games:next},null,2)+"\n"),sha});
+  if(!r.ok)throw new Error(r.status);
+  list=next;if(nextForm){formUrl=nextForm.formUrl;founder=nextForm.founder;setApply();$("founder").textContent=founder}
+}
+
+$("login").onsubmit=async e=>{
+  e.preventDefault();
+  const r=$("lRepo").value.trim().replace(/^https:\/\/github\.com\//,"").replace(/\/$/,""),t=$("lToken").value.trim();
+  if(!/^[\w.-]+\/[\w.-]+$/.test(r)){$("lMsg").textContent="Type it like yourname/yourname.github.io";return}
+  $("lMsg").textContent="Checking…";
+  try{const x=await fetch(`https://api.github.com/repos/${r}`,{headers:{Authorization:"Bearer "+t}});
+    if(!x.ok)throw 0;
+    const j=await x.json();if(!j.permissions?.push){$("lMsg").textContent="That token can't edit this repo. Give it Contents: Read and write.";return}
+    repo=r;token=t;store.set("dd_repo",r);store.set("dd_token",t);$("login").reset();$("lMsg").textContent="";showPanel();
+  }catch{$("lMsg").textContent="Couldn't log in. Check the repo name and token."}
+};
+$("formLink").onsubmit=async e=>{
+  e.preventDefault();
+  const u=$("fForm").value.trim(),f=$("fFounder").value.trim()||"@djbmx123";
+  if(u&&!/^https:\/\//i.test(u)){$("fMsg").textContent="Paste a full link that starts with https://";return}
+  $("formBtn").disabled=true;$("fMsg").textContent="Saving…";
+  try{await saveList(list,"Update site settings",{formUrl:u,founder:f});$("fMsg").textContent="Saved. Visitors see it within about a minute."}
+  catch{$("fMsg").textContent="Couldn't save. Try again."}
+  $("formBtn").disabled=false;
+};
+$("logout").onclick=()=>{repo=token=null;store.set("dd_repo",null);store.set("dd_token",null);showPanel()};
+
+$("add").onsubmit=async e=>{
+  e.preventDefault();
+  const placeId=placeFromLink($("aUrl").value);
+  if(!placeId){$("aMsg").textContent="Use the game's page link, like roblox.com/games/123456/Name";return}
+  if(list.some(g=>g.placeId===placeId)){$("aMsg").textContent="That game is already on the site.";return}
+  $("addBtn").disabled=true;$("aMsg").textContent="Looking it up on Roblox…";
+  try{
+    const universeId=await universeOf(placeId);if(!universeId)throw new Error("nogame");
+    await loadInfo([universeId]);
+    $("aMsg").textContent=`Found ${info[universeId]?.name||"the game"}. Saving…`;
+    await saveList([...list,{placeId,universeId}],"Add game "+placeId);
+    render();$("add").reset();$("aMsg").textContent="Added. Visitors see it within about a minute.";
+  }catch(err){$("aMsg").textContent=err.message==="nogame"?"Couldn't find that game on Roblox.":"Something went wrong. Try again in a moment."}
+  $("addBtn").disabled=false;
+};
+
+function renderAdminList(){
+  if(!loggedIn())return;
+  $("list").innerHTML=list.map(g=>{const i=info[g.universeId]||{};return `<div class="item">${i.thumb?`<img src="${esc(i.thumb)}" alt="">`:`<span class="ph"></span>`}
+    <div>${esc(i.name||"Game "+g.placeId)}<small>${i.visits!=null?fmt(i.visits):"–"} visits · ${i.playing!=null?fmt(i.playing):"–"} playing</small></div>
+    <button data-del="${esc(g.placeId)}">Remove</button></div>`}).join("")||`<p class="hint">No games yet. Paste a link above.</p>`;
+}
+$("list").addEventListener("click",async e=>{
+  const id=e.target.dataset.del;if(!id)return;
+  if(e.target.dataset.sure!=="1"){e.target.dataset.sure="1";e.target.textContent="Sure?";setTimeout(()=>{e.target.dataset.sure="";e.target.textContent="Remove"},3000);return}
+  e.target.disabled=true;
+  try{await saveList(list.filter(g=>g.placeId!==id),"Remove game "+id);render()}catch{$("aMsg").textContent="Couldn't remove it. Try again."}
+});
+}
+</script>
+</body>
+</html>
