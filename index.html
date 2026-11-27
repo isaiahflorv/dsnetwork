@@ -169,6 +169,10 @@ footer .wrap{display:flex;justify-content:space-between;align-items:center;gap:1
 .shade{position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:30;opacity:0;pointer-events:none;transition:opacity .25s}
 .drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);z-index:31;background:#0d0e10;border-left:1px solid var(--line2);transform:translateX(100%);transition:transform .3s cubic-bezier(.2,.8,.2,1);overflow-y:auto;padding:22px}
 .adm .shade{opacity:1;pointer-events:auto}.adm .drawer{transform:none}
+.drawer.wide{width:min(860px,100%)}
+.drawer.wide #apItems{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,380px),1fr));gap:12px}.drawer.wide #apItems .app{margin-top:0}
+.badge{display:inline-grid;place-items:center;min-width:20px;height:20px;padding:0 6px;margin-left:6px;border-radius:99px;background:#ff4d6d;color:#fff;font:800 11px Inter;box-shadow:0 0 12px rgba(255,77,109,.6)}
+.app .acts2 .btn{min-height:52px;font-size:15px}
 .drawer header{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}
 .drawer h2{font:900 24px Archivo;text-transform:uppercase}
 .drawer form{display:grid;gap:12px}
@@ -492,6 +496,8 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
           <label>Publishable (anon) key<input id="sbKey" placeholder="sb_publishable_… or eyJ…"></label>
           <label>Your email (only this email can read applications)<input id="sbMail" type="email" placeholder="you@email.com"></label>
           <label>Discord webhook for the application bot (optional)<input id="sbHook" type="url" placeholder="https://discord.com/api/webhooks/…"></label>
+          <label>iPhone notifications: your secret ntfy topic (optional)<input id="sbNtfy" maxlength="64" placeholder="dsnetwork-apps-…"></label>
+          <button class="btn ghost sm" type="button" id="ntfyGen">Make me a secret topic</button>
           <button class="btn ghost sm" type="button" id="sqlBtn">Show setup SQL</button>
           <pre class="sql hide" id="sqlOut"></pre>
           <button class="btn ghost sm hide" type="button" id="sqlCopy">Copy SQL</button>
@@ -508,6 +514,7 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
           <p class="msg" id="sbLMsg" role="status"></p>
         </form>
         <div id="apList" class="hide">
+          <div class="mini"><div><b id="cPend">–</b>pending</div><div><b id="cAcc">–</b>accepted</div><div><b id="cDen">–</b>denied</div></div>
           <div class="chips" id="apFilter"><label><input type="radio" name="apf" value="pending" checked> Pending</label><label><input type="radio" name="apf" value="accepted"> Accepted</label><label><input type="radio" name="apf" value="denied"> Denied</label></div>
           <p class="msg" id="apMsg" role="status"></p>
           <div id="apItems"></div>
@@ -681,7 +688,7 @@ const showPanel=()=>{const on=loggedIn();document.body.classList.toggle("isadmin
 const open=v=>{document.body.classList.toggle("adm",v);if(v)showPanel()};
 $("openAdmin").onclick=()=>open(true);
 $("devLink").onclick=e=>{e.preventDefault();open(true)};
-$("closeAdmin").onclick=()=>{open(false);clean()};
+$("closeAdmin").onclick=()=>{open(false);clean();$("drawer").classList.remove("wide")};
 $("shade").onclick=()=>$("closeAdmin").click();
 // keep the address bar as just dsnetwork.uk
 const clean=()=>{if(location.hash)history.replaceState(null,"",location.pathname+location.search)};
@@ -689,6 +696,7 @@ document.addEventListener("click",e=>{
   const l=e.target.closest('a[href^="#"]');if(!l||e.defaultPrevented)return;
   const id=l.getAttribute("href").slice(1);e.preventDefault();
   if(id==="admin"){open(true);return}
+  if(id==="apps"){openAppsTab();return}
   if(id==="apply-form"){openApply();return}
   const t=id&&id!=="top"?document.getElementById(id):null;
   t?t.scrollIntoView({behavior:reduce?"auto":"smooth"}):scrollTo({top:0,behavior:reduce?"auto":"smooth"});
@@ -926,7 +934,7 @@ $("apStatus").onsubmit=async e=>{e.preventDefault();const code=$("apSCode").valu
   catch{m.textContent="Couldn't check right now. Try again later."}};
 
 // ---------- admin: applications ----------
-const sqlFor=(mail,hook)=>{const em=(mail||"YOUR_EMAIL@example.com").replace(/'/g,"''");const wh=(hook||"").replace(/'/g,"''");
+const sqlFor=(mail,hook,topic)=>{const tp=(topic||"").replace(/[^\w-]/g,"");const em=(mail||"YOUR_EMAIL@example.com").replace(/'/g,"''");const wh=(hook||"").replace(/'/g,"''");
 return `-- D$Network applications setup. Paste ALL of this into Supabase → SQL Editor → Run.
 create table if not exists public.applications(
   id uuid primary key default gen_random_uuid(),
@@ -998,9 +1006,23 @@ begin
   return new;
 end $f$;
 drop trigger if exists app_notify on public.applications;
-create trigger app_notify after insert on public.applications for each row execute function public.app_notify();`:""}
+create trigger app_notify after insert on public.applications for each row execute function public.app_notify();`:""}${tp?`
+-- iPhone push notifications through the ntfy app
+create extension if not exists pg_net;
+create or replace function public.app_push() returns trigger language plpgsql security definer set search_path=public as $f$
+begin
+  perform net.http_post(
+    url := 'https://ntfy.sh',
+    body := jsonb_build_object('topic','${tp}','title','New D$Network application',
+      'message','@' || new.roblox_username || ' · age ' || new.age || ' · ' || coalesce(array_to_string(new.roles,', '),''),
+      'click','https://dsnetwork.uk/#apps','tags',jsonb_build_array('inbox_tray'),'priority',4),
+    headers := '{"Content-Type":"application/json"}'::jsonb);
+  return new;
+end $f$;
+drop trigger if exists app_push on public.applications;
+create trigger app_push after insert on public.applications for each row execute function public.app_push();`:""}
 `};
-$("sqlBtn").onclick=()=>{$("sqlOut").textContent=sqlFor($("sbMail").value.trim(),$("sbHook").value.trim());$("sqlOut").classList.remove("hide");$("sqlCopy").classList.remove("hide")};
+$("sqlBtn").onclick=()=>{$("sqlOut").textContent=sqlFor($("sbMail").value.trim(),$("sbHook").value.trim(),$("sbNtfy").value.trim());$("sqlOut").classList.remove("hide");$("sqlCopy").classList.remove("hide")};
 $("sqlCopy").onclick=async()=>{try{await navigator.clipboard.writeText($("sqlOut").textContent);$("sqlCopy").textContent="Copied ✓"}catch{$("sbMsg").textContent="Select the SQL and copy it by hand."}};
 $("sbForm").onsubmit=async e=>{e.preventDefault();const u=$("sbUrl").value.trim().replace(/\/$/,""),k=$("sbKey").value.trim();
   if(u&&!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(u)){$("sbMsg").textContent="The URL looks like https://xxxx.supabase.co";return}
@@ -1021,6 +1043,20 @@ $("sbLogin").onsubmit=async e=>{e.preventDefault();$("sbLMsg").textContent="Logg
   catch{$("sbLMsg").textContent="Wrong email or password."}};
 $("sbOut").onclick=async()=>{try{await (await sb()).auth.signOut()}catch{}showApps()};
 $("apFilter").addEventListener("change",e=>{apFilter=e.target.value;loadApps()});
+$("ntfyGen").onclick=()=>{const a=new Uint32Array(3);crypto.getRandomValues(a);$("sbNtfy").value="dsnetwork-apps-"+[...a].map(x=>x.toString(36)).join("")};
+async function countApps(){
+  try{const c=await sb();const {data}=await c.auth.getSession();if(!data?.session)return null;
+    const n=async s=>(await c.from("applications").select("id",{count:"exact",head:true}).eq("status",s)).count??0;
+    const [p,a,d]=await Promise.all([n("pending"),n("accepted"),n("denied")]);
+    $("cPend").textContent=p;$("cAcc").textContent=a;$("cDen").textContent=d;
+    for(const el of [$("devLink"),document.querySelector('[data-tab="tApps"]')]){el.querySelector(".badge")?.remove();if(p){const b=document.createElement("span");b.className="badge";b.textContent=p>99?"99+":p;el.appendChild(b)}}
+    return p}catch{return null}
+}
+let lastPend=null;
+setInterval(async()=>{if(!(site.sbUrl&&site.sbKey)||!loggedIn())return;const p=await countApps();
+  if(p!=null&&lastPend!=null&&p>lastPend&&!$("tApps").classList.contains("hide")&&document.body.classList.contains("adm"))loadApps();
+  if(p!=null)lastPend=p},45000);
+setTimeout(()=>{if(site.sbUrl&&site.sbKey&&loggedIn())countApps().then(p=>lastPend=p)},2500);
 const flagsFor=a=>{const f=[];const d=daysSince(a.roblox_created);
   if(d!=null&&d<30)f.push(["r",`New Roblox account (${d} days)`]);else if(d!=null&&d<180)f.push(["y",`Roblox account ${d} days old`]);else if(d!=null)f.push(["g",`Roblox account ${Math.floor(d/365)}y old`]);
   if(a.dob&&ageFromDob(a.dob)!==a.age)f.push(["r","Age/DOB mismatch"]);
@@ -1030,7 +1066,7 @@ const flagsFor=a=>{const f=[];const d=daysSince(a.roblox_created);
 async function loadApps(){
   const m=$("apMsg");m.textContent="Loading…";$("apItems").innerHTML="";
   try{const c=await sb();const {data,error}=await c.from("applications").select("*").eq("status",apFilter).order("created_at",{ascending:false}).limit(100);if(error)throw error;
-    m.textContent=data.length?`${data.length} ${apFilter}`:`No ${apFilter} applications.`;
+    m.textContent=data.length?`${data.length} ${apFilter}`:`No ${apFilter} applications.`;countApps();
     $("apItems").innerHTML=data.map(a=>{const pf=(a.portfolio||[]).filter(u=>siteOf(u));return `<div class="app" data-id="${esc(a.id)}" data-rid="${esc(a.roblox_id)}">
       <div class="top"><img alt="" data-av="${esc(a.roblox_id)}"><div><b>${esc(a.display_name||a.roblox_username)}</b> <a href="https://www.roblox.com/users/${esc(a.roblox_id)}/profile" target="_blank" rel="noopener" style="text-decoration:underline">@${esc(a.roblox_username)}</a><small>${new Date(a.created_at).toLocaleString()} · code ${esc(a.code)}</small></div><span class="st">${esc(a.status)}</span></div>
       <div>${flagsFor(a).map(([k,t])=>`<span class="flag ${k}">${esc(t)}</span>`).join("")}</div>
@@ -1061,6 +1097,9 @@ $("apItems").addEventListener("click",async e=>{const b=e.target.closest("button
     else r=await c.from("applications").update({status:act,reviewed_at:act==="pending"?null:new Date().toISOString(),admin_note:card.querySelector(".note")?.value.trim()||null}).eq("id",id);
     if(r.error)throw r.error;loadApps()}catch{$("apMsg").textContent="Couldn't save that. Try again.";b.disabled=false}});
 document.querySelector('[data-tab="tApps"]').addEventListener("click",showApps);
+document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>$("drawer").classList.toggle("wide",t.dataset.tab==="tApps")));
+const openAppsTab=()=>{open(true);if(loggedIn())document.querySelector('[data-tab="tApps"]').click()};
+if(location.hash==="#apps"){openAppsTab();history.replaceState(null,"",location.pathname)}
 }
 </script>
 </body>
