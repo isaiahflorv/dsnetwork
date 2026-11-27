@@ -8,6 +8,23 @@
   "banner": "Dropping Friday!",
   "bannerOn": true,
   "featured": "113090773455157",
+  "supText": "",
+  "robux": [
+    {
+      "amt": "1000",
+      "url": "https://www.roblox.com/game-pass/2099263575"
+    },
+    {
+      "amt": "2500",
+      "url": "https://www.roblox.com/game-pass/2102094638"
+    },
+    {
+      "amt": "5000",
+      "url": "https://www.roblox.com/game-pass/2099917478"
+    }
+  ],
+  "tipLabel": "",
+  "tipUrl": "",
   "team": [
     {
       "name": "djbmx123",
