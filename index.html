@@ -380,10 +380,11 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
         <label class="check"><input type="checkbox" id="sOpen"> Applications are open</label>
         <label>Discord invite link<input id="sDiscord" type="url" placeholder="https://discord.gg/..."></label>
         <div class="label" style="margin:14px 0 0">Support section</div>
+        <label>Donation game place ID<input id="sPlace" maxlength="15" placeholder="44041282" inputmode="numeric"></label>
         <label>Message<input id="sSupText" maxlength="140" placeholder="Every donation helps us make more games."></label>
-        <div class="two"><label>Robux amount<input id="sR1a" maxlength="8" placeholder="25" inputmode="numeric"></label><label>Game pass link<input id="sR1u" type="url" placeholder="https://www.roblox.com/game-pass/..."></label></div>
-        <div class="two"><label>Robux amount<input id="sR2a" maxlength="8" placeholder="100" inputmode="numeric"></label><label>Game pass link<input id="sR2u" type="url" placeholder="https://www.roblox.com/game-pass/..."></label></div>
-        <div class="two"><label>Robux amount<input id="sR3a" maxlength="8" placeholder="500" inputmode="numeric"></label><label>Game pass link<input id="sR3u" type="url" placeholder="https://www.roblox.com/game-pass/..."></label></div>
+        <div class="two"><label>Robux amount<input id="sR1a" maxlength="8" placeholder="1000" inputmode="numeric"></label><label>Developer product ID<input id="sR1u" maxlength="15" placeholder="3737045567" inputmode="numeric"></label></div>
+        <div class="two"><label>Robux amount<input id="sR2a" maxlength="8" placeholder="2500" inputmode="numeric"></label><label>Developer product ID<input id="sR2u" maxlength="15" placeholder="3737045710" inputmode="numeric"></label></div>
+        <div class="two"><label>Robux amount<input id="sR3a" maxlength="8" placeholder="5000" inputmode="numeric"></label><label>Developer product ID<input id="sR3u" maxlength="15" placeholder="3737045842" inputmode="numeric"></label></div>
         <div class="two"><label>Tip button name<input id="sTipL" maxlength="20" placeholder="Ko-fi"></label><label>Tip link<input id="sTipU" type="url" placeholder="https://ko-fi.com/..."></label></div>
         <p class="hint">The Support section only shows once you add at least one link.</p>
         <button class="btn" id="siteBtn" type="submit">Save site settings</button>
@@ -439,10 +440,10 @@ $("faqList").innerHTML=faq.map(f=>`<details class="reveal"><summary>${f[0]}</sum
 
 // ---------- settings ----------
 const RBXPASS=/^https:\/\/(www\.)?roblox\.com\/(game-pass|catalog|bundles|games)\//i;
-const DEF={formUrl:"",founder:"@djbmx123",name:"D$ Devs",tagline:"D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.",discord:"",appsOpen:true,banner:"",bannerOn:false,featured:"",team:[],supText:"",robux:[],tipLabel:"",tipUrl:""};
+const DEF={formUrl:"",founder:"@djbmx123",name:"D$ Devs",tagline:"D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.",discord:"",appsOpen:true,banner:"",bannerOn:false,featured:"",team:[],supText:"",donatePlace:"",robux:[],tipLabel:"",tipUrl:""};
 let site={...DEF};
 const str=(v,d)=>typeof v==="string"&&v.trim()?v.trim():d;
-const readSite=d=>{d=d&&!Array.isArray(d)?d:{};return{formUrl:str(d.formUrl,""),founder:str(d.founder,DEF.founder),name:str(d.name,DEF.name),tagline:str(d.tagline,DEF.tagline),discord:str(d.discord,""),appsOpen:d.appsOpen!==false,banner:str(d.banner,""),bannerOn:!!d.bannerOn,featured:String(d.featured||""),supText:str(d.supText,""),robux:Array.isArray(d.robux)?d.robux.filter(x=>x&&/^\d{1,7}$/.test(String(x.amt))&&RBXPASS.test(String(x.url))).slice(0,3):[],tipLabel:str(d.tipLabel,""),tipUrl:/^https:\/\//i.test(String(d.tipUrl||""))?String(d.tipUrl):"",team:Array.isArray(d.team)?d.team.filter(m=>m&&typeof m.name==="string").map(m=>({name:m.name,role:String(m.role||""),userId:/^\d+$/.test(String(m.userId||""))?String(m.userId):""})).slice(0,60):[]}};
+const readSite=d=>{d=d&&!Array.isArray(d)?d:{};return{formUrl:str(d.formUrl,""),founder:str(d.founder,DEF.founder),name:str(d.name,DEF.name),tagline:str(d.tagline,DEF.tagline),discord:str(d.discord,""),appsOpen:d.appsOpen!==false,banner:str(d.banner,""),bannerOn:!!d.bannerOn,featured:String(d.featured||""),supText:str(d.supText,""),donatePlace:/^\d{1,15}$/.test(String(d.donatePlace||""))?String(d.donatePlace):"",robux:Array.isArray(d.robux)?d.robux.filter(x=>x&&/^\d{1,7}$/.test(String(x.amt))&&(/^\d{1,15}$/.test(String(x.pid||""))||RBXPASS.test(String(x.url||"")))).map(x=>({amt:String(x.amt),pid:String(x.pid||""),url:String(x.url||"")})).slice(0,3):[],tipLabel:str(d.tipLabel,""),tipUrl:/^https:\/\//i.test(String(d.tipUrl||""))?String(d.tipUrl):"",team:Array.isArray(d.team)?d.team.filter(m=>m&&typeof m.name==="string").map(m=>({name:m.name,role:String(m.role||""),userId:/^\d+$/.test(String(m.userId||""))?String(m.userId):""})).slice(0,60):[]}};
 // ---------- Roblox avatars ----------
 const avatars={};let avBusy=false;
 const avHtml=m=>{const a=m.userId&&avatars[m.userId];return a?`<div class="av pic"><img src="${esc(a)}" alt="" loading="lazy"></div>`:`<div class="av">${esc((m.name.replace(/^@/,"")[0]||"?").toUpperCase())}</div>`};
@@ -475,7 +476,8 @@ function applySite(){
   const dc=/^https:\/\/(discord\.gg|discord\.com|www\.discord\.com)\//i.test(site.discord);
   for(const id of ["discordBtn","discordFoot"]){$(id).classList.toggle("hide",!dc);if(dc)$(id).href=site.discord}
   $("banner").classList.toggle("hide",!(site.bannerOn&&site.banner));$("bannerText").textContent=site.banner;
-  const tips=site.robux.map(x=>`<a class="tip" href="${esc(x.url)}" target="_blank" rel="noopener"><small>Donate</small><span class="amt gold">R$${esc(Number(x.amt).toLocaleString())}</span><span class="go">Buy on Roblox →</span></a>`);
+  const tips=site.robux.map(x=>{const href=x.pid&&site.donatePlace?`https://www.roblox.com/games/start?placeId=${site.donatePlace}&launchData=donate-${x.pid}`:x.url;if(!href)return"";
+    return `<a class="tip" href="${esc(href)}" target="_blank" rel="noopener"><small>Donate</small><span class="amt gold">R$${esc(Number(x.amt).toLocaleString())}</span><span class="go">${x.pid?"Donate in Roblox →":"Buy on Roblox →"}</span></a>`}).filter(Boolean);
   if(site.tipUrl)tips.push(`<a class="tip" href="${esc(site.tipUrl)}" target="_blank" rel="noopener"><small>Tip us</small><span class="amt gold">${esc(site.tipLabel||"Tip")}</span><span class="go">Open →</span></a>`);
   $("tipList").innerHTML=tips.join("");$("support").classList.toggle("hide",!tips.length);
   $("supText").textContent=site.supText||"Every donation helps us build more games.";
@@ -558,7 +560,7 @@ document.addEventListener("pointerdown",e=>{const b=e.target.closest(".btn");if(
 // ---------- admin ----------
 let repo=store.get("dd_repo"),token=store.get("dd_token");
 const loggedIn=()=>!!(repo&&token);
-const fillForms=()=>{$("sName").value=site.name;$("sTag").value=site.tagline;$("sFounder").value=site.founder;$("sForm").value=site.formUrl;$("sOpen").checked=site.appsOpen;$("sDiscord").value=site.discord;$("nText").value=site.banner;$("sSupText").value=site.supText;[1,2,3].forEach(i=>{const x=site.robux[i-1];$("sR"+i+"a").value=x?x.amt:"";$("sR"+i+"u").value=x?x.url:""});$("sTipL").value=site.tipLabel;$("sTipU").value=site.tipUrl;$("nOn").checked=site.bannerOn};
+const fillForms=()=>{$("sName").value=site.name;$("sTag").value=site.tagline;$("sFounder").value=site.founder;$("sForm").value=site.formUrl;$("sOpen").checked=site.appsOpen;$("sDiscord").value=site.discord;$("nText").value=site.banner;$("sSupText").value=site.supText;$("sPlace").value=site.donatePlace;[1,2,3].forEach(i=>{const x=site.robux[i-1];$("sR"+i+"a").value=x?x.amt:"";$("sR"+i+"u").value=x?x.pid:""});$("sTipL").value=site.tipLabel;$("sTipU").value=site.tipUrl;$("nOn").checked=site.bannerOn};
 const showPanel=()=>{const on=loggedIn();document.body.classList.toggle("isadmin",on);$("login").classList.toggle("hide",on);$("panel").classList.toggle("hide",!on);if(on){fillForms();renderAdminList();renderTeamAdmin()}};
 const open=v=>{document.body.classList.toggle("adm",v);if(v)showPanel()};
 $("openAdmin").onclick=()=>open(true);
@@ -650,10 +652,12 @@ $("siteForm").onsubmit=async e=>{
   const f=$("sForm").value.trim(),d=$("sDiscord").value.trim();
   if(f&&!/^https:\/\//i.test(f)){$("sMsg").textContent="The form link has to start with https://";return}
   if(d&&!/^https:\/\/(discord\.gg|discord\.com|www\.discord\.com)\//i.test(d)){$("sMsg").textContent="Use a discord.gg invite link.";return}
-  const robux=[];for(const i of [1,2,3]){const a=$("sR"+i+"a").value.trim().replace(/[^\d]/g,""),u=$("sR"+i+"u").value.trim();if(!a&&!u)continue;
-    if(!a||!RBXPASS.test(u)){$("sMsg").textContent=`Robux row ${i}: add an amount and a roblox.com game pass link.`;return}robux.push({amt:a,url:u})}
+  const place=$("sPlace").value.trim().replace(/[^\d]/g,"");
+  const robux=[];for(const i of [1,2,3]){const a=$("sR"+i+"a").value.trim().replace(/[^\d]/g,""),u=$("sR"+i+"u").value.trim().replace(/[^\d]/g,"");if(!a&&!u)continue;
+    if(!a||!u){$("sMsg").textContent=`Robux row ${i}: add an amount and a developer product ID.`;return}robux.push({amt:a,pid:u})}
+  if(robux.length&&!place){$("sMsg").textContent="Add your donation game's place ID.";return}
   const tu=$("sTipU").value.trim();if(tu&&!/^https:\/\//i.test(tu)){$("sMsg").textContent="The tip link has to start with https://";return}
-  const ns={...site,supText:$("sSupText").value.trim(),robux,tipLabel:$("sTipL").value.trim(),tipUrl:tu,name:str($("sName").value,DEF.name),tagline:str($("sTag").value,DEF.tagline),founder:str($("sFounder").value,DEF.founder),formUrl:f,appsOpen:$("sOpen").checked,discord:d};
+  const ns={...site,supText:$("sSupText").value.trim(),donatePlace:place,robux,tipLabel:$("sTipL").value.trim(),tipUrl:tu,name:str($("sName").value,DEF.name),tagline:str($("sTag").value,DEF.tagline),founder:str($("sFounder").value,DEF.founder),formUrl:f,appsOpen:$("sOpen").checked,discord:d};
   busy($("siteBtn"),$("sMsg"),"Saving…");
   try{await save(list,ns,"Update site settings");done($("siteBtn"),$("sMsg"),"Saved. Visitors see it within about a minute.")}catch{done($("siteBtn"),$("sMsg"),FAIL)}
 };
