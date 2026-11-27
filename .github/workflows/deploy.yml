@@ -1,0 +1,47 @@
+name: Publish dsnetwork.uk
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: .
+      - id: deployment
+        uses: actions/deploy-pages@v4
+
+      - name: Tell my iPhone the new version is live
+        if: success()
+        env:
+          MSG: ${{ github.event.head_commit.message }}
+        run: |
+          curl -s -H "Title: dsnetwork.uk updated" -H "Tags: rocket" -H "Click: https://dsnetwork.uk" \
+            -d "New version is live. Players can see it now. (${MSG:-manual publish})" \
+            https://ntfy.sh/dsnetwork-apps-96a2db2ea54a
+
+      - name: Tell my iPhone if publishing failed
+        if: failure()
+        run: |
+          curl -s -H "Title: dsnetwork.uk update FAILED" -H "Tags: warning" -H "Priority: 4" \
+            -H "Click: https://github.com/${{ github.repository }}/actions" \
+            -d "The new version did not go live. Tap to see what went wrong." \
+            https://ntfy.sh/dsnetwork-apps-96a2db2ea54a
