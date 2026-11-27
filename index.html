@@ -572,7 +572,7 @@ const avHtml=m=>{const a=m.userId&&avatars[m.userId];return a?`<div class="av pi
 async function findUser(name){
   name=name.trim().replace(/^@/,"");
   if(/^\d+$/.test(name)){const u=await rbx("users",`/v1/users/${name}`);return{id:String(u.id),name:u.name}}
-  try{const r=await fetch(`https://users.${PROXY}/v1/usernames/users`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({usernames:[name],excludeBannedUsers:false})});
+  try{const r=await fetch(`https://users.${PROXY}/v1/usernames/users`,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({usernames:[name],excludeBannedUsers:false})});
     if(r.ok){const j=await r.json(),u=j.data?.[0];if(u)return{id:String(u.id),name:u.name}}}catch{}
   const s=await rbx("users",`/v1/users/search?keyword=${encodeURIComponent(name)}&limit=10`);
   const u=(s.data||[]).find(x=>x.name.toLowerCase()===name.toLowerCase());
@@ -861,8 +861,11 @@ $("apShots").onchange=e=>{const fs=[...e.target.files].filter(f=>/^image\/(png|j
 let rbxUser=null;
 async function findRbx(name){
   name=name.trim().replace(/^@/,"");if(!/^[A-Za-z0-9_]{3,20}$/.test(name))return null;
-  const r=await fetch(`https://users.${PROXY}/v1/usernames/users`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({usernames:[name],excludeBannedUsers:true})});
-  const u=(await r.json()).data?.[0];if(!u)return null;
+  let u=null;
+  try{const r=await fetch(`https://users.${PROXY}/v1/usernames/users`,{method:"POST",headers:{"Content-Type":"text/plain"},body:JSON.stringify({usernames:[name],excludeBannedUsers:true})});
+    if(r.ok)u=(await r.json()).data?.[0]||null;else throw 0}
+  catch{const s=await rbx("users",`/v1/users/search?keyword=${encodeURIComponent(name)}&limit=10`);u=(s.data||[]).find(x=>x.name.toLowerCase()===name.toLowerCase())||null}
+  if(!u)return null;
   const info=await rbx("users",`/v1/users/${u.id}`).catch(()=>({}));
   const th=await rbx("thumbnails",`/v1/users/avatar-headshot?userIds=${u.id}&size=150x150&format=Png`).catch(()=>({}));
   const img=th.data?.[0]?.imageUrl;
