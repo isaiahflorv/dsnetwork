@@ -498,7 +498,9 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
 
     <div class="tpane hide" id="tApps">
       <div id="apSetup">
-        <p class="hint">Applications are saved in your free Supabase database. Set it up once, then every application shows up here.</p>
+        <p class="msg" id="sbState" style="color:#46e08a"></p>
+        <button class="btn ghost sm hide" type="button" id="sbEdit" style="width:100%">Change connection settings</button>
+        <p class="hint" id="sbIntro">Applications are saved in your free Supabase database. Set it up once, then every application shows up here.</p>
         <form id="sbForm">
           <label>Supabase Project URL<input id="sbUrl" type="url" placeholder="https://xxxx.supabase.co"></label>
           <label>Publishable (anon) key<input id="sbKey" placeholder="sb_publishable_… or eyJ…"></label>
@@ -1132,6 +1134,21 @@ async function autoResult(){
 function confetti(){const cv=document.createElement("canvas");cv.style.cssText="position:fixed;inset:0;z-index:41;pointer-events:none";document.body.appendChild(cv);
   const x=cv.getContext("2d"),W=cv.width=innerWidth,H=cv.height=innerHeight,P=[...Array(140)].map(()=>({x:Math.random()*W,y:-20-Math.random()*H/2,v:2+Math.random()*4,s:4+Math.random()*6,r:Math.random()*6,c:["#ffffff","#d7dce2","#9ba2ab","#f1f4f7"][Math.random()*4|0]}));
   let t=0;(function f(){x.clearRect(0,0,W,H);for(const p of P){p.y+=p.v;p.x+=Math.sin((p.y+p.r*50)/40);x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.y/30+p.r);x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore()}if(++t<260)requestAnimationFrame(f);else cv.remove()})()}
+
+// ---------- remember Apps settings on this device ----------
+const LS={get:k=>{try{return localStorage.getItem(k)||""}catch{return""}},set:(k,v)=>{try{localStorage.setItem(k,v)}catch{}}};
+const REM={sbMail:"dd_sb_mail",sbHook:"dd_sb_hook",sbNtfy:"dd_sb_ntfy"};
+for(const [id,key] of Object.entries(REM)){const el=$(id);el.value=LS.get(key);el.addEventListener("input",()=>LS.set(key,el.value.trim()))}
+$("ntfyGen").addEventListener("click",()=>LS.set(REM.sbNtfy,$("sbNtfy").value));
+const syncSetup=()=>{const on=!!(site.sbUrl&&site.sbKey);
+  $("sbState").textContent=on?"✓ Connected to your Supabase database. Settings are saved.":"";
+  $("sbEdit").classList.toggle("hide",!on);$("sbIntro").classList.toggle("hide",on);
+  if(on&&!$("sbForm").dataset.open)$("sbForm").classList.add("hide");else $("sbForm").classList.remove("hide");
+  if(!$("sbLMail").value)$("sbLMail").value=LS.get(REM.sbMail)};
+$("sbEdit").onclick=()=>{$("sbForm").dataset.open="1";$("sbForm").classList.remove("hide");$("sbEdit").classList.add("hide")};
+$("sbLogin").addEventListener("submit",()=>{const m=$("sbLMail").value.trim();if(m)LS.set(REM.sbMail,m)});
+document.querySelector('[data-tab="tApps"]').addEventListener("click",syncSetup);
+$("sbForm").addEventListener("submit",()=>{setTimeout(()=>{delete $("sbForm").dataset.open;syncSetup()},1500)});
 }
 </script>
 </body>
