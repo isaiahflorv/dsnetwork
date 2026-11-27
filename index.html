@@ -431,6 +431,14 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
     </details>
   </div>
 </div>
+<div class="modal hide" id="apResult" role="dialog" aria-modal="true">
+  <div class="mbox" style="text-align:center;max-width:520px">
+    <div id="arIcon" style="font-size:64px;line-height:1">🎉</div>
+    <h2 id="arTitle" style="margin-top:14px">You're in.</h2>
+    <p class="lead" id="arText" style="margin-inline:auto"></p>
+    <div class="cta"><a class="btn hide" id="arDiscord" target="_blank" rel="noopener">Join the Discord</a><button class="btn ghost" type="button" id="arClose">Close</button></div>
+  </div>
+</div>
 <div class="shade" id="shade"></div>
 <aside class="drawer" id="drawer" aria-label="Admin">
   <header><h2>Developer Panel</h2><button class="btn ghost sm" id="closeAdmin">Close</button></header>
@@ -667,7 +675,7 @@ async function start(){
   try{const r=await fetch("games.json?"+Date.now(),{cache:"no-store"});data=r.ok?await r.json():null}catch{}
   list=Array.isArray(data)?data:Array.isArray(data?.games)?data.games:[];
   list=list.filter(g=>/^\d+$/.test(g.placeId)&&/^\d+$/.test(String(g.universeId)));
-  site=readSite(data);applySite();
+  site=readSite(data);applySite();setTimeout(autoResult,900);
   render();await loadInfo(list.map(g=>g.universeId));render();
   setInterval(async()=>{await loadInfo(list.map(g=>g.universeId));updateNumbers()},REFRESH_MS);
 }
@@ -924,7 +932,7 @@ $("apForm").onsubmit=async e=>{
       roles,experience:$("apExp").value,hours:$("apHours").value,games:$("apGames").value.trim(),portfolio:links,images:paths,about:why,confirm_truth:true};
     const {error}=await c.from("applications").insert(row);if(error)throw error;
     $("apForm").classList.add("hide");$("apDone").classList.remove("hide");$("apCode").textContent=code;
-    try{localStorage.setItem("dd_app_code",code)}catch{}
+    try{localStorage.setItem("dd_app_code",code);localStorage.removeItem("dd_app_seen")}catch{}
   }catch(x){const m=String(x?.message||x);
     err(/pending application/i.test(m)?"You already have an application waiting. Check its status below.":/15 or older|date of birth/i.test(m)?m:"Couldn't send it. Check your internet and try again.")}
   $("apSend").disabled=false;
@@ -1103,6 +1111,27 @@ document.querySelector('[data-tab="tApps"]').addEventListener("click",showApps);
 document.querySelectorAll(".tab").forEach(t=>t.addEventListener("click",()=>$("drawer").classList.toggle("wide",t.dataset.tab==="tApps")));
 const openAppsTab=()=>{open(true);if(loggedIn())document.querySelector('[data-tab="tApps"]').click()};
 if(location.hash==="#apps"){openAppsTab();history.replaceState(null,"",location.pathname)}
+
+// ---------- automatic "you got in" popup for returning applicants ----------
+$("arClose").onclick=()=>{$("apResult").classList.add("hide");document.body.style.overflow=""};
+$("apResult").addEventListener("click",e=>{if(e.target===$("apResult"))$("arClose").click()});
+async function autoResult(){
+  let code=null,seen=null;try{code=localStorage.getItem("dd_app_code");seen=localStorage.getItem("dd_app_seen")}catch{}
+  if(!code||!(site.sbUrl&&site.sbKey))return;
+  try{const c=await sb();const {data}=await c.rpc("application_status",{p_code:code});const s=data?.[0]?.status;
+    if(!s||s==="pending"||seen===code+":"+s)return;
+    try{localStorage.setItem("dd_app_seen",code+":"+s)}catch{}
+    if(s==="accepted"){$("arIcon").textContent="🎉";$("arTitle").textContent="You're in.";
+      $("arText").textContent=`Your application was accepted. Welcome to ${site.name}! We'll message you on Discord with what's next.`;
+      const dc=/^https:\/\/(discord\.gg|discord\.com|www\.discord\.com)\//i.test(site.discord);$("arDiscord").classList.toggle("hide",!dc);if(dc)$("arDiscord").href=site.discord;
+      if(!reduce)confetti()}
+    else{$("arIcon").textContent="💬";$("arTitle").textContent="Not this time.";$("arText").textContent="Your application wasn't accepted this round. Keep building and apply again later.";$("arDiscord").classList.add("hide")}
+    $("apResult").classList.remove("hide");document.body.style.overflow="hidden";
+  }catch{}
+}
+function confetti(){const cv=document.createElement("canvas");cv.style.cssText="position:fixed;inset:0;z-index:41;pointer-events:none";document.body.appendChild(cv);
+  const x=cv.getContext("2d"),W=cv.width=innerWidth,H=cv.height=innerHeight,P=[...Array(140)].map(()=>({x:Math.random()*W,y:-20-Math.random()*H/2,v:2+Math.random()*4,s:4+Math.random()*6,r:Math.random()*6,c:["#ffffff","#d7dce2","#9ba2ab","#f1f4f7"][Math.random()*4|0]}));
+  let t=0;(function f(){x.clearRect(0,0,W,H);for(const p of P){p.y+=p.v;p.x+=Math.sin((p.y+p.r*50)/40);x.fillStyle=p.c;x.save();x.translate(p.x,p.y);x.rotate(p.y/30+p.r);x.fillRect(-p.s/2,-p.s/4,p.s,p.s/2);x.restore()}if(++t<260)requestAnimationFrame(f);else cv.remove()})()}
 }
 </script>
 </body>
