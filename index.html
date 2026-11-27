@@ -183,6 +183,43 @@ input{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;
 .item button{min-height:36px;padding:0 10px;border:1px solid var(--line);background:none;color:var(--ink);cursor:pointer;font-size:13px}
 .hint{font-size:12px;color:var(--mute);line-height:1.5}
 .hide{display:none!important}
+.modal{position:fixed;inset:0;z-index:40;background:rgba(0,0,0,.72);backdrop-filter:blur(6px);display:flex;align-items:flex-start;justify-content:center;overflow-y:auto;padding:4vh 14px}
+.mbox{width:min(720px,100%);background:linear-gradient(180deg,#121316,#0b0b0d);border:1px solid var(--line2);box-shadow:0 0 80px rgba(205,214,228,.15);padding:clamp(20px,4vw,36px)}
+.mbox header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:6px}
+.mbox h2{font-size:clamp(26px,4vw,36px)}
+.mbox form{display:grid;gap:14px;margin-top:18px}
+.fs{border:1px solid var(--line);padding:16px;display:grid;gap:12px}
+.fs>b{font:800 12px Archivo;letter-spacing:.22em;text-transform:uppercase;color:var(--gold2)}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chips label{display:inline-flex;align-items:center;gap:6px;border:1px solid var(--line);padding:8px 12px;cursor:pointer;color:var(--ink);font-size:14px;min-height:40px}
+.chips input{accent-color:#d7dce2;width:16px;height:16px}
+select{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#070707;border:1px solid var(--line);border-radius:4px;padding:12px}
+.rbx{display:flex;align-items:center;gap:12px;border:1px solid var(--line);padding:10px;font-size:14px}
+.rbx img{width:52px;height:52px;border-radius:50%;background:#1c1f24}
+.rbx small{display:block;color:var(--mute)}
+.ok{color:#46e08a}.bad{color:#ff8a8a}
+.plink{display:flex;gap:8px;align-items:center}
+.ptag{flex:none;font:700 11px Archivo;letter-spacing:.08em;text-transform:uppercase;padding:4px 8px;border:1px solid var(--line2);color:var(--gold2);white-space:nowrap}
+.shots{display:grid;grid-template-columns:repeat(auto-fill,minmax(110px,1fr));gap:8px}
+.shots img{width:100%;aspect-ratio:16/10;object-fit:cover;border:1px solid var(--line)}
+.honey{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+.done{text-align:center;padding:30px 0}
+.done .code{font:900 40px Archivo;letter-spacing:.12em;margin:14px 0}
+.app{border:1px solid var(--line);background:var(--card);padding:14px;display:grid;gap:10px;margin-top:10px}
+.app .top{display:flex;gap:10px;align-items:center}
+.app .top img{width:48px;height:48px;border-radius:50%;background:#1c1f24}
+.app .top div{flex:1;font-size:14px}
+.app .top small{display:block;color:var(--mute)}
+.flag{display:inline-block;font:700 10px Archivo;letter-spacing:.08em;text-transform:uppercase;padding:3px 7px;margin:2px 4px 0 0;border:1px solid}
+.flag.r{color:#ff8a8a;border-color:#7a2a40}.flag.g{color:#46e08a;border-color:#1f6b45}.flag.y{color:#ffd27a;border-color:#7a6320}
+.app dl{display:grid;grid-template-columns:auto 1fr;gap:4px 10px;margin:0;font-size:13px}
+.app dt{color:var(--mute)}.app dd{margin:0;white-space:pre-wrap;overflow-wrap:anywhere}
+.app .pics{display:flex;gap:6px;flex-wrap:wrap}.app .pics img{width:96px;height:60px;object-fit:cover;border:1px solid var(--line);cursor:zoom-in}
+.app .acts2{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.btn.accept{background:linear-gradient(180deg,#5fe39b,#1f9d5c);color:#04140b}
+.btn.deny{background:#3a1220;box-shadow:inset 0 0 0 1px #7a2a40;color:#ffb3c4}
+.st{font:800 11px Archivo;letter-spacing:.14em;text-transform:uppercase}
+pre.sql{max-height:180px;overflow:auto;background:#050505;border:1px solid var(--line);padding:10px;font-size:11px;white-space:pre-wrap}
 .banner{position:relative;z-index:11;padding:10px 16px;text-align:center;font:800 13px Archivo;letter-spacing:.12em;text-transform:uppercase;color:#0d0f12;background:var(--shine);background-size:250% 100%;animation:shine 8s linear infinite}
 .team{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:16px;margin-top:44px}
 .member{border:1px solid var(--line);background:var(--bg2);padding:24px 20px;text-align:center;transition:transform .3s,border-color .3s}
@@ -202,8 +239,8 @@ a.member{display:block}
 .tip small{font:700 11px Archivo;letter-spacing:.24em;text-transform:uppercase;color:var(--mute)}
 .tip .go{margin-top:10px;font:800 12px Archivo;letter-spacing:.16em;text-transform:uppercase;color:var(--gold2)}
 .flink{color:var(--gold2);text-decoration:underline;margin-left:6px}
-.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-bottom:18px;border:1px solid var(--line);padding:4px}
-.tab{min-height:40px;border:0;background:none;color:var(--mute);font:800 11px Archivo;letter-spacing:.12em;text-transform:uppercase;cursor:pointer}
+.tabs{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:18px;border:1px solid var(--line);padding:4px}
+.tab{min-height:40px;border:0;background:none;color:var(--mute);font:800 10px Archivo;letter-spacing:.06em;text-transform:uppercase;cursor:pointer}
 .tab.on{background:var(--shine);background-size:250% 100%;color:#0d0f12}
 .mini{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:16px}
 .mini div{border:1px solid var(--line);padding:10px;font-size:11px;color:var(--mute);text-transform:uppercase;letter-spacing:.1em}
@@ -344,6 +381,52 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
   </div>
 </footer>
 
+<div class="modal hide" id="apModal" role="dialog" aria-modal="true" aria-labelledby="apTitle">
+  <div class="mbox">
+    <header><h2 id="apTitle">Apply to <span class="gold"><span class="sitename">D$ Devs</span></span></h2><button class="btn ghost sm" id="apClose" type="button">Close</button></header>
+    <p class="hint">You must be <b>15 or older</b>. Every application is checked by hand. Lying about your age or work gets you permanently blocked.</p>
+    <form id="apForm" novalidate>
+      <input class="honey" id="apHoney" tabindex="-1" autocomplete="off" aria-hidden="true">
+      <div class="fs"><b>1 · Your Roblox account</b>
+        <label>Roblox username<input id="apUser" required maxlength="20" autocomplete="off" autocapitalize="off" placeholder="djbmx123"></label>
+        <div id="apRbx" class="rbx hide"></div>
+      </div>
+      <div class="fs"><b>2 · About you</b>
+        <div class="two"><label>Age<input id="apAge" type="number" min="15" max="99" required inputmode="numeric"></label><label>Date of birth<input id="apDob" type="date" required></label></div>
+        <label>Discord username<input id="apDiscord" required maxlength="40" placeholder="yourname"></label>
+        <label>Timezone / country (optional)<input id="apTz" maxlength="40" placeholder="EST · USA"></label>
+      </div>
+      <div class="fs"><b>3 · What you do</b>
+        <div class="chips" id="apRoles"></div>
+        <div class="two"><label>Experience<select id="apExp"><option value="">Pick one</option><option>Under 6 months</option><option>6–12 months</option><option>1–2 years</option><option>2–4 years</option><option>4+ years</option></select></label>
+        <label>Hours per week<select id="apHours"><option value="">Pick one</option><option>1–5</option><option>5–10</option><option>10–20</option><option>20+</option></select></label></div>
+        <label>Games you've worked on (names + links)<textarea id="apGames" rows="3" maxlength="1500"></textarea></label>
+      </div>
+      <div class="fs"><b>4 · Portfolio</b>
+        <p class="hint">Links to your work. Roblox, Talent Hub, DevForum, GitHub, ArtStation, YouTube, Medal and more are all detected.</p>
+        <div id="apLinks"></div>
+        <button class="btn ghost sm" type="button" id="apAddLink">+ Add another link</button>
+        <label>Screenshots of your work (up to 4 images, 5 MB each)<input id="apShots" type="file" accept="image/png,image/jpeg,image/webp,image/gif" multiple></label>
+        <div class="shots" id="apShotPrev"></div>
+      </div>
+      <div class="fs"><b>5 · Why you</b>
+        <label>Why do you want to join?<textarea id="apWhy" rows="4" maxlength="2000" required></textarea></label>
+        <label class="check"><input type="checkbox" id="apTrue" required> Everything here is true, and I'm 15 or older.</label>
+      </div>
+      <button class="btn" id="apSend" type="submit">Send application</button>
+      <p class="msg" id="apErr" role="alert"></p>
+    </form>
+    <div id="apDone" class="done hide">
+      <h2>Application sent.</h2>
+      <p class="lead" style="margin-inline:auto">Save your code. Use it to check if you got in.</p>
+      <div class="code gold" id="apCode"></div>
+      <button class="btn ghost sm" type="button" id="apCopy">Copy code</button>
+    </div>
+    <details style="margin-top:22px"><summary>Already applied? Check your status</summary>
+      <form id="apStatus" style="padding:0 22px 20px;display:flex;gap:8px;flex-wrap:wrap"><input id="apSCode" maxlength="12" placeholder="Your code" style="flex:1;min-width:160px"><button class="btn sm" type="submit">Check</button><p class="msg" id="apSMsg" role="status" style="width:100%"></p></form>
+    </details>
+  </div>
+</div>
 <div class="shade" id="shade"></div>
 <aside class="drawer" id="drawer" aria-label="Admin">
   <header><h2>Developer Panel</h2><button class="btn ghost sm" id="closeAdmin">Close</button></header>
@@ -356,7 +439,7 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
   </form>
   <div id="panel" class="hide">
     <div class="tabs" role="tablist">
-      <button class="tab on" data-tab="tGames">Games</button><button class="tab" data-tab="tSite">Site</button><button class="tab" data-tab="tNews">Announce</button><button class="tab" data-tab="tTeam">Team</button>
+      <button class="tab on" data-tab="tGames">Games</button><button class="tab" data-tab="tSite">Site</button><button class="tab" data-tab="tNews">Announce</button><button class="tab" data-tab="tTeam">Team</button><button class="tab" data-tab="tApps">Apps</button>
     </div>
 
     <div class="tpane" id="tGames">
@@ -401,6 +484,38 @@ textarea{width:100%;font:16px Inter,sans-serif;color:var(--ink);background:#0707
       </form>
     </div>
 
+    <div class="tpane hide" id="tApps">
+      <div id="apSetup">
+        <p class="hint">Applications are saved in your free Supabase database. Set it up once, then every application shows up here.</p>
+        <form id="sbForm">
+          <label>Supabase Project URL<input id="sbUrl" type="url" placeholder="https://xxxx.supabase.co"></label>
+          <label>Publishable (anon) key<input id="sbKey" placeholder="sb_publishable_… or eyJ…"></label>
+          <label>Your email (only this email can read applications)<input id="sbMail" type="email" placeholder="you@email.com"></label>
+          <label>Discord webhook for the application bot (optional)<input id="sbHook" type="url" placeholder="https://discord.com/api/webhooks/…"></label>
+          <button class="btn ghost sm" type="button" id="sqlBtn">Show setup SQL</button>
+          <pre class="sql hide" id="sqlOut"></pre>
+          <button class="btn ghost sm hide" type="button" id="sqlCopy">Copy SQL</button>
+          <button class="btn" id="sbSave" type="submit">Save connection</button>
+          <p class="msg" id="sbMsg" role="status"></p>
+        </form>
+      </div>
+      <div id="apAdmin" class="hide" style="margin-top:20px">
+        <form id="sbLogin">
+          <p class="hint">Log in with the Supabase user you created for your email.</p>
+          <label>Email<input id="sbLMail" type="email" autocomplete="username"></label>
+          <label>Password<input id="sbLPass" type="password" autocomplete="current-password"></label>
+          <button class="btn" type="submit">Log in to applications</button>
+          <p class="msg" id="sbLMsg" role="status"></p>
+        </form>
+        <div id="apList" class="hide">
+          <div class="chips" id="apFilter"><label><input type="radio" name="apf" value="pending" checked> Pending</label><label><input type="radio" name="apf" value="accepted"> Accepted</label><label><input type="radio" name="apf" value="denied"> Denied</label></div>
+          <p class="msg" id="apMsg" role="status"></p>
+          <div id="apItems"></div>
+          <button class="btn ghost sm" id="sbOut" type="button" style="width:100%;margin-top:14px">Log out of applications</button>
+        </div>
+      </div>
+    </div>
+
     <div class="tpane hide" id="tTeam">
       <form id="teamForm">
         <div class="two"><label>Roblox username<input id="tName" maxlength="30" placeholder="djbmx123" required autocapitalize="off" autocomplete="off"></label><label>Role<input id="tRole" maxlength="30" placeholder="Scripter" required></label></div>
@@ -440,10 +555,10 @@ $("faqList").innerHTML=faq.map(f=>`<details class="reveal"><summary>${f[0]}</sum
 
 // ---------- settings ----------
 const RBXPASS=/^https:\/\/(www\.)?roblox\.com\/(game-pass|catalog|bundles|games)\//i;
-const DEF={formUrl:"",founder:"@djbmx123",name:"D$ Devs",tagline:"D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.",discord:"",appsOpen:true,banner:"",bannerOn:false,featured:"",team:[],supText:"",donatePlace:"",robux:[],tipLabel:"",tipUrl:""};
+const DEF={formUrl:"",founder:"@djbmx123",name:"D$ Devs",tagline:"D$ Devs is a team of scripters, builders, modelers and UI artists making Roblox games. Every number on this page is live from Roblox.",discord:"",appsOpen:true,banner:"",bannerOn:false,featured:"",team:[],supText:"",donatePlace:"",sbUrl:"",sbKey:"",robux:[],tipLabel:"",tipUrl:""};
 let site={...DEF};
 const str=(v,d)=>typeof v==="string"&&v.trim()?v.trim():d;
-const readSite=d=>{d=d&&!Array.isArray(d)?d:{};return{formUrl:str(d.formUrl,""),founder:str(d.founder,DEF.founder),name:str(d.name,DEF.name),tagline:str(d.tagline,DEF.tagline),discord:str(d.discord,""),appsOpen:d.appsOpen!==false,banner:str(d.banner,""),bannerOn:!!d.bannerOn,featured:String(d.featured||""),supText:str(d.supText,""),donatePlace:/^\d{1,15}$/.test(String(d.donatePlace||""))?String(d.donatePlace):"",robux:Array.isArray(d.robux)?d.robux.filter(x=>x&&/^\d{1,7}$/.test(String(x.amt))&&(/^\d{1,15}$/.test(String(x.pid||""))||RBXPASS.test(String(x.url||"")))).map(x=>({amt:String(x.amt),pid:String(x.pid||""),url:String(x.url||"")})).slice(0,3):[],tipLabel:str(d.tipLabel,""),tipUrl:/^https:\/\//i.test(String(d.tipUrl||""))?String(d.tipUrl):"",team:Array.isArray(d.team)?d.team.filter(m=>m&&typeof m.name==="string").map(m=>({name:m.name,role:String(m.role||""),userId:/^\d+$/.test(String(m.userId||""))?String(m.userId):""})).slice(0,60):[]}};
+const readSite=d=>{d=d&&!Array.isArray(d)?d:{};return{formUrl:str(d.formUrl,""),founder:str(d.founder,DEF.founder),name:str(d.name,DEF.name),tagline:str(d.tagline,DEF.tagline),discord:str(d.discord,""),appsOpen:d.appsOpen!==false,banner:str(d.banner,""),bannerOn:!!d.bannerOn,featured:String(d.featured||""),supText:str(d.supText,""),sbUrl:/^https:\/\/[a-z0-9-]+\.supabase\.co\/?$/i.test(String(d.sbUrl||""))?String(d.sbUrl).replace(/\/$/,""):"",sbKey:/^[\w.\-]{20,400}$/.test(String(d.sbKey||""))?String(d.sbKey):"",donatePlace:/^\d{1,15}$/.test(String(d.donatePlace||""))?String(d.donatePlace):"",robux:Array.isArray(d.robux)?d.robux.filter(x=>x&&/^\d{1,7}$/.test(String(x.amt))&&(/^\d{1,15}$/.test(String(x.pid||""))||RBXPASS.test(String(x.url||"")))).map(x=>({amt:String(x.amt),pid:String(x.pid||""),url:String(x.url||"")})).slice(0,3):[],tipLabel:str(d.tipLabel,""),tipUrl:/^https:\/\//i.test(String(d.tipUrl||""))?String(d.tipUrl):"",team:Array.isArray(d.team)?d.team.filter(m=>m&&typeof m.name==="string").map(m=>({name:m.name,role:String(m.role||""),userId:/^\d+$/.test(String(m.userId||""))?String(m.userId):""})).slice(0,60):[]}};
 // ---------- Roblox avatars ----------
 const avatars={};let avBusy=false;
 const avHtml=m=>{const a=m.userId&&avatars[m.userId];return a?`<div class="av pic"><img src="${esc(a)}" alt="" loading="lazy"></div>`:`<div class="av">${esc((m.name.replace(/^@/,"")[0]||"?").toUpperCase())}</div>`};
@@ -470,8 +585,9 @@ async function loadAvatars(){
 function applySite(){
   document.querySelectorAll(".sitename").forEach(e=>e.textContent=site.name);
   $("tagline").textContent=site.tagline;$("founder").textContent=site.founder;
-  const ok=site.appsOpen&&/^https:\/\//i.test(site.formUrl),b=$("applyBtn");
-  b.href=ok?site.formUrl:"#join";b.textContent=ok?"Apply now →":site.appsOpen?"Opening soon":"Closed";ok?b.setAttribute("target","_blank"):b.removeAttribute("target");b.rel="noopener";
+  const builtIn=site.appsOpen&&site.sbUrl&&site.sbKey;
+  const ok=builtIn||(site.appsOpen&&/^https:\/\//i.test(site.formUrl)),b=$("applyBtn");
+  b.href=builtIn?"#apply-form":ok?site.formUrl:"#join";b.textContent=ok?"Apply now →":site.appsOpen?"Opening soon":"Closed";ok&&!builtIn?b.setAttribute("target","_blank"):b.removeAttribute("target");b.rel="noopener";
   $("applyState").textContent=!site.appsOpen?"Closed for now.":ok?"Open now.":"Opening soon.";
   const dc=/^https:\/\/(discord\.gg|discord\.com|www\.discord\.com)\//i.test(site.discord);
   for(const id of ["discordBtn","discordFoot"]){$(id).classList.toggle("hide",!dc);if(dc)$(id).href=site.discord}
@@ -573,6 +689,7 @@ document.addEventListener("click",e=>{
   const l=e.target.closest('a[href^="#"]');if(!l||e.defaultPrevented)return;
   const id=l.getAttribute("href").slice(1);e.preventDefault();
   if(id==="admin"){open(true);return}
+  if(id==="apply-form"){openApply();return}
   const t=id&&id!=="top"?document.getElementById(id):null;
   t?t.scrollIntoView({behavior:reduce?"auto":"smooth"}):scrollTo({top:0,behavior:reduce?"auto":"smooth"});
   clean();
@@ -692,6 +809,258 @@ $("teamAdmin").addEventListener("click",async e=>{
   $("tMsg").textContent="Saving…";
   try{await save(list,{...site,team:t},"Update team");renderTeamAdmin();$("tMsg").textContent="Saved."}catch{$("tMsg").textContent=FAIL}
 });
+
+// ================= APPLICATIONS =================
+const SB_CDN="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.97.0/dist/umd/supabase.js";
+let sbClient=null,sbFor="";
+function loadScript(src){return new Promise((res,rej)=>{if(window.supabase)return res();const s=document.createElement("script");s.src=src;s.onload=res;s.onerror=rej;document.head.appendChild(s)})}
+async function sb(){
+  if(!site.sbUrl||!site.sbKey)throw new Error("noconfig");
+  const k=site.sbUrl+"|"+site.sbKey;
+  if(sbClient&&sbFor===k)return sbClient;
+  await loadScript(SB_CDN);
+  sbClient=window.supabase.createClient(site.sbUrl,site.sbKey,{auth:{persistSession:true,storageKey:"dd_sb_auth"}});sbFor=k;return sbClient;
+}
+const ROLES=["Scripter","Builder","Modeler","UI Designer","Animator","VFX Artist","Game Designer","Sound Designer","Tester"];
+$("apRoles").innerHTML=ROLES.map(r=>`<label><input type="checkbox" value="${r}"> ${r}</label>`).join("");
+
+// portfolio site detection
+const SITES=[ [/^create\.roblox\.com$/,p=>/talent/.test(p)?"Talent Hub":"Roblox Creator"],[/^talent\.roblox\.com$/,()=>"Talent Hub"],[/^devforum\.roblox\.com$/,()=>"DevForum"],
+ [/(^|\.)github\.com$/,()=>"GitHub"],[/(^|\.)github\.io$/,()=>"GitHub Pages"],[/(^|\.)artstation\.com$/,()=>"ArtStation"],[/(^|\.)behance\.net$/,()=>"Behance"],
+ [/(^|\.)dribbble\.com$/,()=>"Dribbble"],[/(^|\.)sketchfab\.com$/,()=>"Sketchfab"],[/(^|\.)(youtube\.com|youtu\.be)$/,()=>"YouTube"],[/(^|\.)(x\.com|twitter\.com)$/,()=>"X / Twitter"],
+ [/(^|\.)tiktok\.com$/,()=>"TikTok"],[/(^|\.)instagram\.com$/,()=>"Instagram"],[/(^|\.)carrd\.co$/,()=>"Carrd"],[/(^|\.)linktr\.ee$/,()=>"Linktree"],
+ [/(^|\.)(notion\.site|notion\.so)$/,()=>"Notion"],[/^docs\.google\.com$/,()=>"Google Docs"],[/^drive\.google\.com$/,()=>"Google Drive"],[/^sites\.google\.com$/,()=>"Google Sites"],
+ [/(^|\.)itch\.io$/,()=>"itch.io"],[/(^|\.)medal\.tv$/,()=>"Medal"],[/(^|\.)gyazo\.com$/,()=>"Gyazo"],[/(^|\.)imgur\.com$/,()=>"Imgur"],[/(^|\.)streamable\.com$/,()=>"Streamable"],
+ [/(^|\.)vimeo\.com$/,()=>"Vimeo"],[/(^|\.)twitch\.tv$/,()=>"Twitch"],[/(^|\.)kick\.com$/,()=>"Kick"],[/(^|\.)figma\.com$/,()=>"Figma"],[/(^|\.)canva\.(com|site)$/,()=>"Canva"],
+ [/(^|\.)dropbox\.com$/,()=>"Dropbox"],[/(^|\.)(wixsite\.com|wix\.com)$/,()=>"Wix"],[/(^|\.)gitbook\.io$/,()=>"GitBook"],[/(^|\.)fiverr\.com$/,()=>"Fiverr"],[/(^|\.)upwork\.com$/,()=>"Upwork"],
+ [/(^|\.)contra\.com$/,()=>"Contra"],[/(^|\.)pinterest\.[a-z.]+$/,()=>"Pinterest"],[/(^|\.)deviantart\.com$/,()=>"DeviantArt"],[/(^|\.)cults3d\.com$/,()=>"Cults3D"],[/(^|\.)blendswap\.com$/,()=>"BlendSwap"],
+ [/(^|\.)(onedrive\.live\.com|1drv\.ms)$/,()=>"OneDrive"],[/(^|\.)streamable\.com$/,()=>"Streamable"],[/(^|\.)reddit\.com$/,()=>"Reddit"],
+ [/(^|\.)roblox\.com$/,p=>/\/users\//.test(p)?"Roblox profile":/\/games\//.test(p)?"Roblox game":/\/groups\/|\/communities\//.test(p)?"Roblox group":/\/talent/.test(p)?"Talent Hub":"Roblox"]];
+function siteOf(u){try{const x=new URL(u);if(x.protocol!=="https:")return null;const host=x.hostname.toLowerCase();for(const [re,f] of SITES)if(re.test(host))return f(x.pathname.toLowerCase());return"Website"}catch{return null}}
+function addLink(v=""){const box=$("apLinks");if(box.children.length>=6)return;const d=document.createElement("div");d.className="plink";
+  d.innerHTML=`<input type="url" maxlength="300" placeholder="https://…" style="flex:1"><span class="ptag">Link</span>`;const i=d.firstChild,t=d.lastChild;i.value=v;
+  const upd=()=>{const s=i.value.trim()?siteOf(i.value.trim()):"Link";t.textContent=s||"Invalid";t.style.color=s?"":"#ff8a8a"};i.addEventListener("input",upd);upd();box.appendChild(d)}
+addLink();addLink();$("apAddLink").onclick=()=>addLink();
+
+// screenshots
+let shots=[];
+$("apShots").onchange=e=>{const fs=[...e.target.files].filter(f=>/^image\/(png|jpeg|webp|gif)$/.test(f.type));
+  $("apErr").textContent=fs.length>4?"Only the first 4 images will be sent.":"";
+  shots=fs.slice(0,4).filter(f=>{if(f.size>5*1024*1024){$("apErr").textContent=`${f.name} is over 5 MB.`;return false}return true});
+  $("apShotPrev").innerHTML="";shots.forEach(f=>{const im=document.createElement("img");im.alt="";im.src=URL.createObjectURL(f);$("apShotPrev").appendChild(im)})};
+
+// Roblox account check
+let rbxUser=null;
+async function findRbx(name){
+  name=name.trim().replace(/^@/,"");if(!/^[A-Za-z0-9_]{3,20}$/.test(name))return null;
+  const r=await fetch(`https://users.${PROXY}/v1/usernames/users`,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({usernames:[name],excludeBannedUsers:true})});
+  const u=(await r.json()).data?.[0];if(!u)return null;
+  const info=await rbx("users",`/v1/users/${u.id}`).catch(()=>({}));
+  const th=await rbx("thumbnails",`/v1/users/avatar-headshot?userIds=${u.id}&size=150x150&format=Png`).catch(()=>({}));
+  const img=th.data?.[0]?.imageUrl;
+  return{id:String(u.id),name:u.name,display:u.displayName||u.name,created:info.created||null,img:img&&/^https:\/\/[\w.-]*rbxcdn\.com\//.test(img)?img:""};
+}
+const daysSince=d=>d?Math.floor((Date.now()-new Date(d))/864e5):null;
+let rbxT;$("apUser").addEventListener("input",()=>{rbxUser=null;clearTimeout(rbxT);rbxT=setTimeout(checkRbx,600)});
+async function checkRbx(){
+  const box=$("apRbx"),v=$("apUser").value;if(!v.trim()){box.classList.add("hide");return}
+  box.classList.remove("hide");box.textContent="Checking Roblox…";
+  try{const u=await findRbx(v);rbxUser=u;
+    if(!u){box.innerHTML=`<span class="bad">No Roblox account with that username.</span>`;return}
+    const d=daysSince(u.created);
+    box.innerHTML=`${u.img?`<img src="${esc(u.img)}" alt="">`:""}<div><b>${esc(u.display)}</b> <span class="ok">✓ found</span><small>@${esc(u.name)}${d!=null?` · account is ${d.toLocaleString()} days old`:""}</small></div>`;
+  }catch{box.innerHTML=`<span class="bad">Couldn't reach Roblox. Try again in a moment.</span>`}
+}
+
+// open / close
+function openApply(){
+  if(!(site.appsOpen&&site.sbUrl&&site.sbKey)){if(/^https:\/\//.test(site.formUrl))window.open(site.formUrl,"_blank","noopener");return}
+  $("apModal").classList.remove("hide");document.body.style.overflow="hidden";setTimeout(()=>$("apUser").focus(),50);
+}
+const closeApply=()=>{$("apModal").classList.add("hide");document.body.style.overflow=""};
+$("apClose").onclick=closeApply;
+$("apModal").addEventListener("click",e=>{if(e.target===$("apModal"))closeApply()});
+addEventListener("keydown",e=>{if(e.key==="Escape"&&!$("apModal").classList.contains("hide"))closeApply()});
+$("applyBtn").addEventListener("click",e=>{if(site.appsOpen&&site.sbUrl&&site.sbKey){e.preventDefault();openApply()}});
+
+const ageFromDob=s=>{const b=new Date(s+"T00:00:00"),n=new Date();let a=n.getFullYear()-b.getFullYear();const m=n.getMonth()-b.getMonth();if(m<0||(m===0&&n.getDate()<b.getDate()))a--;return a};
+const newCode=()=>{const c="ABCDEFGHJKLMNPQRSTUVWXYZ23456789",a=new Uint32Array(8);crypto.getRandomValues(a);return [...a].map(x=>c[x%c.length]).join("")};
+
+$("apForm").onsubmit=async e=>{
+  e.preventDefault();const err=m=>{$("apErr").textContent=m;return false};
+  if($("apHoney").value)return;
+  if(!rbxUser){await checkRbx();if(!rbxUser)return err("Enter a real Roblox username.")}
+  const age=parseInt($("apAge").value,10),dob=$("apDob").value;
+  if(!dob)return err("Add your date of birth.");
+  const real=ageFromDob(dob);
+  if(!(age>=15))return err("You have to be 15 or older to apply.");
+  if(real!==age)return err("Your age doesn't match your date of birth. Check them both.");
+  if(real<15||real>99)return err("You have to be 15 or older to apply.");
+  const discord=$("apDiscord").value.trim();if(!/^[\w.]{2,40}$/.test(discord))return err("Add a valid Discord username.");
+  const roles=[...document.querySelectorAll("#apRoles input:checked")].map(i=>i.value);if(!roles.length)return err("Pick at least one role.");
+  if(!$("apExp").value||!$("apHours").value)return err("Pick your experience and hours per week.");
+  const links=[...document.querySelectorAll("#apLinks input")].map(i=>i.value.trim()).filter(Boolean);
+  for(const l of links)if(!siteOf(l))return err("One of your portfolio links isn't a valid https:// link.");
+  if(!links.length&&!shots.length)return err("Add at least one portfolio link or screenshot.");
+  const why=$("apWhy").value.trim();if(why.length<20)return err("Tell us a bit more about why you want to join (20+ characters).");
+  if(!$("apTrue").checked)return err("Confirm that everything is true.");
+  $("apSend").disabled=true;err("Sending…");
+  try{
+    const c=await sb(),code=newCode(),paths=[];
+    for(const [i,f] of shots.entries()){const ext=(f.type.split("/")[1]||"png").replace("jpeg","jpg");const p=`${code}/${i+1}-${newCode().slice(0,4)}.${ext}`;
+      const {error}=await c.storage.from("applications").upload(p,f,{contentType:f.type,upsert:false});if(error)throw error;paths.push(p)}
+    const row={code,roblox_username:rbxUser.name,roblox_id:Number(rbxUser.id),roblox_created:rbxUser.created,display_name:rbxUser.display,age,dob,discord,timezone:$("apTz").value.trim().slice(0,40),
+      roles,experience:$("apExp").value,hours:$("apHours").value,games:$("apGames").value.trim(),portfolio:links,images:paths,about:why,confirm_truth:true};
+    const {error}=await c.from("applications").insert(row);if(error)throw error;
+    $("apForm").classList.add("hide");$("apDone").classList.remove("hide");$("apCode").textContent=code;
+    try{localStorage.setItem("dd_app_code",code)}catch{}
+  }catch(x){const m=String(x?.message||x);
+    err(/pending application/i.test(m)?"You already have an application waiting. Check its status below.":/15 or older|date of birth/i.test(m)?m:"Couldn't send it. Check your internet and try again.")}
+  $("apSend").disabled=false;
+};
+$("apCopy").onclick=async()=>{try{await navigator.clipboard.writeText($("apCode").textContent);$("apCopy").textContent="Copied"}catch{}};
+try{const c=localStorage.getItem("dd_app_code");if(c)$("apSCode").value=c}catch{}
+$("apStatus").onsubmit=async e=>{e.preventDefault();const code=$("apSCode").value.trim().toUpperCase(),m=$("apSMsg");if(!code)return;m.textContent="Checking…";
+  try{const c=await sb();const {data,error}=await c.rpc("application_status",{p_code:code});if(error)throw error;const s=data?.[0]?.status;
+    m.textContent=!s?"No application with that code.":s==="accepted"?"🎉 You got in! We'll message you on Discord.":s==="denied"?"Not this time. You can apply again later.":"Still being reviewed. Check back soon."}
+  catch{m.textContent="Couldn't check right now. Try again later."}};
+
+// ---------- admin: applications ----------
+const sqlFor=(mail,hook)=>{const em=(mail||"YOUR_EMAIL@example.com").replace(/'/g,"''");const wh=(hook||"").replace(/'/g,"''");
+return `-- D$Network applications setup. Paste ALL of this into Supabase → SQL Editor → Run.
+create table if not exists public.applications(
+  id uuid primary key default gen_random_uuid(),
+  code text unique not null,
+  created_at timestamptz not null default now(),
+  roblox_username text not null, roblox_id bigint not null, roblox_created timestamptz, display_name text,
+  age int not null, dob date not null, discord text not null, timezone text,
+  roles text[] not null default '{}', experience text, hours text, games text,
+  portfolio jsonb not null default '[]', images text[] not null default '{}',
+  about text not null, confirm_truth boolean not null default false,
+  status text not null default 'pending' check (status in ('pending','accepted','denied')),
+  admin_note text, reviewed_at timestamptz);
+alter table public.applications enable row level security;
+grant insert on public.applications to anon, authenticated;
+grant select, update, delete on public.applications to authenticated;
+
+create or replace function public.app_check() returns trigger language plpgsql security definer set search_path=public as $f$
+begin
+  new.status:='pending'; new.admin_note:=null; new.reviewed_at:=null; new.created_at:=now();
+  if new.dob is null or new.dob > (current_date - interval '15 years') then raise exception 'You must be 15 or older to apply'; end if;
+  if date_part('year', age(current_date, new.dob))::int <> new.age then raise exception 'Your age does not match your date of birth'; end if;
+  if not coalesce(new.confirm_truth,false) then raise exception 'Confirmation required'; end if;
+  if length(new.about)>2000 or length(coalesce(new.games,''))>1500 or cardinality(new.images)>4 or jsonb_array_length(new.portfolio)>6 or char_length(new.code)<>8 then raise exception 'Application too large'; end if;
+  if exists(select 1 from public.applications where roblox_id=new.roblox_id and status='pending') then raise exception 'You already have a pending application'; end if;
+  return new;
+end $f$;
+drop trigger if exists app_check on public.applications;
+create trigger app_check before insert on public.applications for each row execute function public.app_check();
+
+drop policy if exists "anyone can apply" on public.applications;
+create policy "anyone can apply" on public.applications for insert to anon, authenticated with check (true);
+drop policy if exists "owner reads" on public.applications;
+create policy "owner reads" on public.applications for select to authenticated using ((auth.jwt()->>'email') = '${em}');
+drop policy if exists "owner reviews" on public.applications;
+create policy "owner reviews" on public.applications for update to authenticated using ((auth.jwt()->>'email') = '${em}') with check ((auth.jwt()->>'email') = '${em}');
+drop policy if exists "owner deletes" on public.applications;
+create policy "owner deletes" on public.applications for delete to authenticated using ((auth.jwt()->>'email') = '${em}');
+
+create or replace function public.application_status(p_code text) returns table(status text, created_at timestamptz)
+language sql security definer set search_path=public as $f$ select status, created_at from public.applications where code = upper(p_code) $f$;
+grant execute on function public.application_status(text) to anon, authenticated;
+
+insert into storage.buckets (id,name,public,file_size_limit,allowed_mime_types)
+values ('applications','applications',false,5242880,array['image/png','image/jpeg','image/webp','image/gif'])
+on conflict (id) do update set file_size_limit=excluded.file_size_limit, allowed_mime_types=excluded.allowed_mime_types, public=false;
+drop policy if exists "applicants upload" on storage.objects;
+create policy "applicants upload" on storage.objects for insert to anon, authenticated with check (bucket_id='applications');
+drop policy if exists "owner views uploads" on storage.objects;
+create policy "owner views uploads" on storage.objects for select to authenticated using (bucket_id='applications' and (auth.jwt()->>'email') = '${em}');
+${wh?`
+-- Application bot: posts every new application to your Discord channel
+create extension if not exists pg_net;
+create or replace function public.app_notify() returns trigger language plpgsql security definer set search_path=public as $f$
+begin
+  perform net.http_post(
+    url := '${wh}',
+    body := jsonb_build_object('embeds', jsonb_build_array(jsonb_build_object(
+      'title','📥 New application: @' || new.roblox_username,
+      'url','https://www.roblox.com/users/' || new.roblox_id || '/profile',
+      'color', 13421772,
+      'fields', jsonb_build_array(
+        jsonb_build_object('name','Age','value',new.age::text,'inline',true),
+        jsonb_build_object('name','Discord','value',new.discord,'inline',true),
+        jsonb_build_object('name','Roles','value',coalesce(array_to_string(new.roles,', '),'-'),'inline',false),
+        jsonb_build_object('name','Experience','value',coalesce(new.experience,'-'),'inline',true),
+        jsonb_build_object('name','Code','value',new.code,'inline',true)),
+      'footer', jsonb_build_object('text','Review it in your Developer Panel → Apps')))),
+    headers := '{"Content-Type":"application/json"}'::jsonb);
+  return new;
+end $f$;
+drop trigger if exists app_notify on public.applications;
+create trigger app_notify after insert on public.applications for each row execute function public.app_notify();`:""}
+`};
+$("sqlBtn").onclick=()=>{$("sqlOut").textContent=sqlFor($("sbMail").value.trim(),$("sbHook").value.trim());$("sqlOut").classList.remove("hide");$("sqlCopy").classList.remove("hide")};
+$("sqlCopy").onclick=async()=>{try{await navigator.clipboard.writeText($("sqlOut").textContent);$("sqlCopy").textContent="Copied ✓"}catch{$("sbMsg").textContent="Select the SQL and copy it by hand."}};
+$("sbForm").onsubmit=async e=>{e.preventDefault();const u=$("sbUrl").value.trim().replace(/\/$/,""),k=$("sbKey").value.trim();
+  if(u&&!/^https:\/\/[a-z0-9-]+\.supabase\.co$/i.test(u)){$("sbMsg").textContent="The URL looks like https://xxxx.supabase.co";return}
+  if(k&&!/^[\w.\-]{20,400}$/.test(k)){$("sbMsg").textContent="That key doesn't look right. Copy the publishable/anon key.";return}
+  $("sbSave").disabled=true;$("sbMsg").textContent="Saving…";
+  try{await save(list,{...site,sbUrl:u,sbKey:k},"Connect applications");$("sbMsg").textContent=u&&k?"Connected. The Apply button now opens your application form.":"Disconnected.";showApps()}catch{$("sbMsg").textContent=FAIL}
+  $("sbSave").disabled=false};
+
+let apFilter="pending";
+async function showApps(){
+  $("sbUrl").value=site.sbUrl;$("sbKey").value=site.sbKey;
+  const on=!!(site.sbUrl&&site.sbKey);$("apAdmin").classList.toggle("hide",!on);if(!on)return;
+  try{const c=await sb();const {data}=await c.auth.getSession();const s=data?.session;
+    $("sbLogin").classList.toggle("hide",!!s);$("apList").classList.toggle("hide",!s);if(s)loadApps()}catch{$("sbLMsg").textContent="Couldn't connect to Supabase. Check the URL and key."}
+}
+$("sbLogin").onsubmit=async e=>{e.preventDefault();$("sbLMsg").textContent="Logging in…";
+  try{const c=await sb();const {error}=await c.auth.signInWithPassword({email:$("sbLMail").value.trim(),password:$("sbLPass").value});if(error)throw error;$("sbLPass").value="";$("sbLMsg").textContent="";showApps()}
+  catch{$("sbLMsg").textContent="Wrong email or password."}};
+$("sbOut").onclick=async()=>{try{await (await sb()).auth.signOut()}catch{}showApps()};
+$("apFilter").addEventListener("change",e=>{apFilter=e.target.value;loadApps()});
+const flagsFor=a=>{const f=[];const d=daysSince(a.roblox_created);
+  if(d!=null&&d<30)f.push(["r",`New Roblox account (${d} days)`]);else if(d!=null&&d<180)f.push(["y",`Roblox account ${d} days old`]);else if(d!=null)f.push(["g",`Roblox account ${Math.floor(d/365)}y old`]);
+  if(a.dob&&ageFromDob(a.dob)!==a.age)f.push(["r","Age/DOB mismatch"]);
+  if(a.dob&&ageFromDob(a.dob)<15)f.push(["r","Under 15"]);
+  if(!(a.portfolio||[]).length&&!(a.images||[]).length)f.push(["y","No portfolio"]);
+  return f};
+async function loadApps(){
+  const m=$("apMsg");m.textContent="Loading…";$("apItems").innerHTML="";
+  try{const c=await sb();const {data,error}=await c.from("applications").select("*").eq("status",apFilter).order("created_at",{ascending:false}).limit(100);if(error)throw error;
+    m.textContent=data.length?`${data.length} ${apFilter}`:`No ${apFilter} applications.`;
+    $("apItems").innerHTML=data.map(a=>{const pf=(a.portfolio||[]).filter(u=>siteOf(u));return `<div class="app" data-id="${esc(a.id)}" data-rid="${esc(a.roblox_id)}">
+      <div class="top"><img alt="" data-av="${esc(a.roblox_id)}"><div><b>${esc(a.display_name||a.roblox_username)}</b> <a href="https://www.roblox.com/users/${esc(a.roblox_id)}/profile" target="_blank" rel="noopener" style="text-decoration:underline">@${esc(a.roblox_username)}</a><small>${new Date(a.created_at).toLocaleString()} · code ${esc(a.code)}</small></div><span class="st">${esc(a.status)}</span></div>
+      <div>${flagsFor(a).map(([k,t])=>`<span class="flag ${k}">${esc(t)}</span>`).join("")}</div>
+      <dl><dt>Age</dt><dd>${esc(a.age)} (born ${esc(a.dob)})</dd><dt>Discord</dt><dd>${esc(a.discord)}</dd>${a.timezone?`<dt>Timezone</dt><dd>${esc(a.timezone)}</dd>`:""}
+      <dt>Roles</dt><dd>${esc((a.roles||[]).join(", "))}</dd><dt>Experience</dt><dd>${esc(a.experience)} · ${esc(a.hours)} hrs/week</dd>
+      ${a.games?`<dt>Games</dt><dd>${esc(a.games)}</dd>`:""}<dt>Why</dt><dd>${esc(a.about)}</dd>
+      ${pf.length?`<dt>Portfolio</dt><dd>${pf.map(u=>`<a href="${esc(u)}" target="_blank" rel="noopener" style="text-decoration:underline">${esc(siteOf(u))}</a>`).join(" · ")}</dd>`:""}
+      <dt>Their games</dt><dd data-games="${esc(a.roblox_id)}">Loading…</dd>${a.admin_note?`<dt>Note</dt><dd>${esc(a.admin_note)}</dd>`:""}</dl>
+      ${(a.images||[]).length?`<div class="pics" data-imgs='${esc(JSON.stringify(a.images))}'></div>`:""}
+      ${a.status==="pending"?`<input class="note" maxlength="300" placeholder="Note (optional, only you see it)"><div class="acts2"><button class="btn accept" data-act="accepted">Accept</button><button class="btn deny" data-act="denied">Deny</button></div>`:`<div class="acts2"><button class="btn ghost sm" data-act="pending">Move back to pending</button><button class="btn ghost sm" data-act="delete">Delete</button></div>`}
+    </div>`}).join("");
+    fillAppExtras(c,data);
+  }catch(x){m.textContent=/JWT|auth/i.test(String(x?.message))?"Log in again.":"Couldn't load applications. Did you run the setup SQL?"}
+}
+async function fillAppExtras(c,data){
+  const ids=[...new Set(data.map(a=>a.roblox_id))];
+  if(ids.length)rbx("thumbnails",`/v1/users/avatar-headshot?userIds=${ids.join(",")}&size=150x150&format=Png`).then(t=>{for(const d of t.data||[])if(/^https:\/\/[\w.-]*rbxcdn\.com\//.test(d.imageUrl||""))document.querySelectorAll(`[data-av="${d.targetId}"]`).forEach(i=>i.src=d.imageUrl)}).catch(()=>{});
+  for(const id of ids)rbx("games",`/v2/users/${id}/games?accessFilter=2&limit=10&sortOrder=Desc`).then(g=>{const list=(g.data||[]).map(x=>`<a href="https://www.roblox.com/games/${esc(x.rootPlace?.id)}" target="_blank" rel="noopener" style="text-decoration:underline">${esc(x.name)}</a> (${fmt(x.placeVisits||0)} visits)`);
+    document.querySelectorAll(`[data-games="${id}"]`).forEach(e=>e.innerHTML=list.length?list.join("<br>"):"No public games on their profile")}).catch(()=>document.querySelectorAll(`[data-games="${id}"]`).forEach(e=>e.textContent="Couldn't load"));
+  for(const box of document.querySelectorAll("#apItems [data-imgs]")){try{const paths=JSON.parse(box.dataset.imgs);const {data:s}=await c.storage.from("applications").createSignedUrls(paths,3600);
+    box.innerHTML=(s||[]).filter(x=>x.signedUrl).map(x=>`<a href="${esc(x.signedUrl)}" target="_blank" rel="noopener"><img src="${esc(x.signedUrl)}" alt="Screenshot"></a>`).join("")}catch{box.textContent="Couldn't load screenshots"}}
+}
+$("apItems").addEventListener("click",async e=>{const b=e.target.closest("button[data-act]");if(!b)return;const card=b.closest(".app"),id=card.dataset.id,act=b.dataset.act;
+  if((act==="denied"||act==="delete")&&b.dataset.sure!=="1"){b.dataset.sure="1";const t=b.textContent;b.textContent="Tap again to confirm";setTimeout(()=>{b.dataset.sure="";b.textContent=t},3000);return}
+  b.disabled=true;
+  try{const c=await sb();let r;
+    if(act==="delete")r=await c.from("applications").delete().eq("id",id);
+    else r=await c.from("applications").update({status:act,reviewed_at:act==="pending"?null:new Date().toISOString(),admin_note:card.querySelector(".note")?.value.trim()||null}).eq("id",id);
+    if(r.error)throw r.error;loadApps()}catch{$("apMsg").textContent="Couldn't save that. Try again.";b.disabled=false}});
+document.querySelector('[data-tab="tApps"]').addEventListener("click",showApps);
 }
 </script>
 </body>
